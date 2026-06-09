@@ -121,7 +121,12 @@ def normalize_text(value: str) -> str:
 def slugify(value: str) -> str:
     normalized = normalize_text(value)
     normalized = re.sub(r"[^a-z0-9]+", "-", normalized).strip("-")
-    return normalized[:44] or "photo"
+    return normalized[:44].strip("-") or "photo"
+
+
+def title_from_slug(value: str) -> str:
+    words = re.sub(r"[-_]+", " ", value).strip()
+    return words[:1].upper() + words[1:] if words else "Nouveau sujet"
 
 
 def download_photo(token: str, photo: dict[str, Any], instruction: str) -> Path:
@@ -214,6 +219,200 @@ def insert_in_section(document: str, section_id: str, figure: str) -> str:
     raise RuntimeError(f'Could not find section id="{section_id}".')
 
 
+def paragraph_html(text: str) -> str:
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    if not lines:
+        return "<p>Contenu ajoute depuis Telegram, a completer selon les besoins.</p>"
+    return "\n".join(f"<p>{html.escape(line)}</p>" for line in lines)
+
+
+def extract_topic_command(text: str) -> tuple[str, str, str] | None:
+    normalized = normalize_text(text)
+    patterns = (
+        ("page", r"\b(?:ajoute|cree|cr[eé]e|nouvelle|fais)\s+(?:une\s+)?page\s+(?:sur|pour|a propos de|à propos de)?\s*"),
+        ("section", r"\b(?:ajoute|cree|cr[eé]e|nouvelle|fais)\s+(?:une\s+)?section\s+(?:sur|pour|a propos de|à propos de)?\s*"),
+    )
+    for kind, pattern in patterns:
+        match = re.search(pattern, normalized)
+        if not match:
+            continue
+        original_tail = text[match.end():].strip(" :-\n\t")
+        if not original_tail:
+            return kind, "Nouveau sujet", ""
+        first_line, _, rest = original_tail.partition("\n")
+        title, sep, inline_body = first_line.partition(":")
+        body = "\n".join(part.strip() for part in (inline_body, rest) if part.strip())
+        return kind, title.strip() or "Nouveau sujet", body
+    return None
+
+
+def add_nav_link(document: str, href: str, label: str) -> str:
+    link = f'        <a href="{html.escape(href, quote=True)}">{html.escape(label)}</a>\n'
+    if link.strip() in document:
+        return document
+    marker = "      </div>\n    </div>\n  </nav>"
+    if marker not in document:
+        raise RuntimeError("Could not find the navigation block.")
+    return document.replace(marker, link + marker, 1)
+
+
+def build_topic_section(section_id: str, title: str, body: str) -> str:
+    return (
+        f'    <section id="{html.escape(section_id, quote=True)}">\n'
+        '      <div class="section-head">\n'
+        "        <div>\n"
+        '          <span class="eyebrow">Ajout Telegram</span>\n'
+        f"          <h2>{html.escape(title)}</h2>\n"
+        "        </div>\n"
+        f'        <p class="lead">Sujet ajoute depuis Telegram le {datetime.now().strftime("%d/%m/%Y")}.</p>\n'
+        "      </div>\n"
+        '      <article class="card">\n'
+        f"        {paragraph_html(body)}\n"
+        "      </article>\n"
+        "    </section>\n"
+    )
+
+
+def create_topic_section(title: str, body: str) -> list[Path]:
+    slug = slugify(title)
+    section_id = f"telegram-{slug}"
+    document = INDEX_FILE.read_text(encoding="utf-8")
+    section = build_topic_section(section_id, title_from_slug(title) if title == slug else title, body)
+    marker = '    <section id="supports">'
+    if marker in document:
+        document = document.replace(marker, section + "\n" + marker, 1)
+    else:
+        document = document.replace("  </main>", section + "\n  </main>", 1)
+    INDEX_FILE.write_text(document, encoding="utf-8", newline="\n")
+    return [INDEX_FILE]
+
+
+def build_topic_page(slug: str, title: str, body: str) -> str:
+    safe_title = html.escape(title)
+    return f"""<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{safe_title} - IAcool</title>
+  <meta name="description" content="{safe_title}">
+  <style>
+    :root {{
+      --canvas: #fffdf8;
+      --paper: #ffffff;
+      --ink: #111827;
+      --muted: #697076;
+      --line: #e6dfd3;
+      --orange: #ee6043;
+      --teal: #087f83;
+      --radius: 8px;
+      --max: 920px;
+    }}
+
+    * {{ box-sizing: border-box; }}
+
+    body {{
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--canvas);
+      line-height: 1.6;
+    }}
+
+    main {{
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 42px 0 72px;
+    }}
+
+    a {{ color: #b43f2c; font-weight: 750; }}
+
+    .eyebrow {{
+      display: inline-flex;
+      min-height: 30px;
+      align-items: center;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--teal);
+      font-size: 0.78rem;
+      font-weight: 850;
+      text-transform: uppercase;
+    }}
+
+    h1 {{
+      max-width: 820px;
+      margin: 18px 0 18px;
+      font-size: clamp(2.6rem, 8vw, 5.5rem);
+      line-height: 1.04;
+      letter-spacing: 0;
+    }}
+
+    .card {{
+      margin-top: 28px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+    }}
+
+    p {{ color: var(--muted); font-size: 1.06rem; }}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="index.html">Retour a l'accueil</a>
+    <header>
+      <span class="eyebrow">Ajout Telegram</span>
+      <h1>{safe_title}</h1>
+      <p>Page ajoutee depuis Telegram le {datetime.now().strftime("%d/%m/%Y")}.</p>
+    </header>
+    <article class="card">
+      {paragraph_html(body)}
+    </article>
+  </main>
+</body>
+</html>
+"""
+
+
+def create_topic_page(title: str, body: str) -> list[Path]:
+    slug = slugify(title)
+    page_path = ROOT / f"{slug}.html"
+    if page_path.exists():
+        stamp = datetime.now().strftime("%H%M%S")
+        page_path = ROOT / f"{slug}-{stamp}.html"
+    page_path.write_text(build_topic_page(page_path.stem, title, body), encoding="utf-8", newline="\n")
+    document = INDEX_FILE.read_text(encoding="utf-8")
+    document = add_nav_link(document, page_path.name, title[:18])
+    INDEX_FILE.write_text(document, encoding="utf-8", newline="\n")
+    return [INDEX_FILE, page_path]
+
+
+def publish_paths(paths: list[Path], message: str) -> str:
+    relative_paths = [path.relative_to(ROOT).as_posix() for path in paths]
+    run_git("add", "--", *relative_paths)
+    commit_output = run_git("commit", "-m", message)
+    run_git("push", "origin", "main")
+    first_line = commit_output.splitlines()[0] if commit_output else "commit created"
+    return first_line
+
+
+def process_topic_command(text: str) -> tuple[str, str] | None:
+    command = extract_topic_command(text)
+    if not command:
+        return None
+    kind, title, body = command
+    if kind == "page":
+        paths = create_topic_page(title, body)
+        commit = publish_paths(paths, f"Add Telegram page: {slugify(title)}")
+        return "Page ajoutee", commit
+    paths = create_topic_section(title, body)
+    commit = publish_paths(paths, f"Add Telegram section: {slugify(title)}")
+    return "Section ajoutee", commit
+
+
 def update_index(image_path: Path, instruction: str) -> str:
     document = INDEX_FILE.read_text(encoding="utf-8")
     target = section_id_from_instruction(instruction)
@@ -258,9 +457,9 @@ def is_undo_request(text: str) -> bool:
 
 def undo_last_telegram_publish() -> str:
     subject = run_git("log", "-1", "--format=%s")
-    if not subject.startswith("Add Telegram photo:"):
+    if not subject.startswith("Add Telegram "):
         raise RuntimeError(
-            "Le dernier commit n'est pas une photo Telegram. Je n'annule rien automatiquement."
+            "Le dernier commit n'est pas un ajout Telegram. Je n'annule rien automatiquement."
         )
     commit_output = run_git("revert", "--no-edit", "HEAD")
     run_git("push", "origin", "main")
@@ -299,7 +498,7 @@ def handle_text(token: str, state: dict[str, Any], message: dict[str, Any]) -> N
         send_message(
             token,
             chat_id,
-            "Envoie une photo avec une legende comme: 'ajoute dans outils' ou 'remplace hero'. Pour enlever la derniere photo publiee: 'annule' ou 'retire la derniere photo'.",
+            "Envoie une photo avec une legende comme: 'ajoute dans outils' ou 'remplace hero'. Tu peux aussi ecrire: 'ajoute une section sur ...' ou 'ajoute une page sur ...'. Pour enlever le dernier ajout: 'annule'.",
         )
         return
     pending = state.setdefault("pending", {}).pop(str(chat_id), None)
@@ -314,10 +513,15 @@ def handle_text(token: str, state: dict[str, Any], message: dict[str, Any]) -> N
                 send_message(token, chat_id, f"Impossible d'annuler: {exc}")
                 raise
             return
+        topic_result = process_topic_command(text)
+        if topic_result:
+            action, commit = topic_result
+            send_message(token, chat_id, f"{action} et publiee sur GitHub. {commit}")
+            return
         send_message(
             token,
             chat_id,
-            "Envoie d'abord une photo, ou ecris 'annule' pour retirer la derniere photo Telegram.",
+            "Envoie une photo, ecris 'ajoute une section sur ...', 'ajoute une page sur ...', ou 'annule'.",
         )
         return
     process_photo_instruction(token, chat_id, pending, text)

@@ -49,9 +49,29 @@ Tu peux aussi envoyer la photo sans legende, puis envoyer la consigne juste apre
 
 Sections reconnues : `hero`, `news`, `idee`, `reperes`, `usages`, `outils`, `prompt`, `enfants`, `mini-defi`, `glossaire`, `supports`.
 
-## 5. Retirer la derniere photo
+## 5. Ajouter une section ou une page
 
-Si la derniere publication faite par le bot ne te plait pas, envoie simplement :
+Tu peux aussi envoyer une consigne texte sans photo :
+
+```text
+ajoute une section sur Programme de la soiree : accueil, demos, questions, apero.
+```
+
+La section sera ajoutee dans `index.html`, juste avant les supports visuels.
+
+Pour creer une page separee :
+
+```text
+ajoute une page sur Sponsors : merci aux partenaires de l'evenement.
+```
+
+Le bot cree alors un fichier HTML dedie, ajoute un lien dans la navigation, commit et push.
+
+Astuce : tout ce qui est apres `:` devient le contenu de la section ou de la page.
+
+## 6. Retirer le dernier ajout
+
+Si la derniere publication faite par le bot ne te plait pas, photo, section ou page, envoie simplement :
 
 ```text
 annule
@@ -63,9 +83,9 @@ ou :
 retire la derniere photo
 ```
 
-Le bot cree alors un commit de revert, supprime la photo ajoutee par le dernier commit Telegram, puis repousse sur GitHub.
+Le bot cree alors un commit de revert, retire le dernier ajout Telegram, puis repousse sur GitHub.
 
-## 6. Publication
+## 7. Publication
 
 A chaque photo traitee, le script fait automatiquement :
 
