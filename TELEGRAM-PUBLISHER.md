@@ -21,6 +21,8 @@ notepad .env
 Optionnel : pour bloquer le bot a ton compte Telegram, ajoute `TELEGRAM_ALLOWED_CHAT_ID`.
 Pour connaitre ton chat id, lance le bot une premiere fois, envoie `/start`, puis regarde le fichier `.telegram-bot-state.json`.
 
+Optionnel : pour activer la redaction IA, ajoute aussi `OPENAI_API_KEY` dans `.env`.
+
 ## 3. Lancer le bot
 
 ```powershell
@@ -69,7 +71,25 @@ Le bot cree alors un fichier HTML dedie, ajoute un lien dans la navigation, comm
 
 Astuce : tout ce qui est apres `:` devient le contenu de la section ou de la page.
 
-## 6. Retirer le dernier ajout
+## 6. Rediger un texte automatiquement
+
+Avec `OPENAI_API_KEY` configure dans `.env`, tu peux demander :
+
+```text
+redige un texte de 300 mots sur l'IA pour les artisans
+```
+
+Par defaut, le bot ajoute le texte dans une nouvelle section de `index.html`.
+
+Pour creer une page dediee :
+
+```text
+redige une page de 600 mots sur comment utiliser ChatGPT en association
+```
+
+Le bot redige le texte, cree la section ou la page, commit et push.
+
+## 7. Retirer le dernier ajout
 
 Si la derniere publication faite par le bot ne te plait pas, photo, section ou page, envoie simplement :
 
@@ -85,7 +105,7 @@ retire la derniere photo
 
 Le bot cree alors un commit de revert, retire le dernier ajout Telegram, puis repousse sur GitHub.
 
-## 7. Publication
+## 8. Publication
 
 A chaque photo traitee, le script fait automatiquement :
 

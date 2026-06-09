@@ -30,6 +30,7 @@ UPLOAD_DIR = ROOT / "uploads" / "telegram"
 STATE_FILE = ROOT / ".telegram-bot-state.json"
 ENV_FILE = ROOT / ".env"
 GIT_EXE = os.environ.get("GIT_EXE", r"C:\Program Files\Git\cmd\git.exe")
+OPENAI_TEXT_MODEL = os.environ.get("OPENAI_TEXT_MODEL", "gpt-5.4")
 
 SECTION_ALIASES = {
     "news": "news",
@@ -244,6 +245,101 @@ def extract_topic_command(text: str) -> tuple[str, str, str] | None:
         body = "\n".join(part.strip() for part in (inline_body, rest) if part.strip())
         return kind, title.strip() or "Nouveau sujet", body
     return None
+
+
+def extract_write_command(text: str) -> tuple[str, str, int] | None:
+    normalized = normalize_text(text)
+    if not re.search(r"\b(redige|ecris|compose)\b", normalized):
+        return None
+    if "texte" not in normalized and "article" not in normalized and "page" not in normalized and "section" not in normalized:
+        return None
+
+    kind = "page" if " page" in normalized or "article" in normalized else "section"
+    word_count = 350
+    word_match = re.search(r"\b(\d{2,5})\s*mots?\b", normalized)
+    if word_match:
+        word_count = max(80, min(2000, int(word_match.group(1))))
+
+    topic_match = re.search(r"\bsur\s+(.+)$", text, flags=re.I | re.S)
+    topic = topic_match.group(1).strip(" .:\n\t") if topic_match else text.strip()
+    topic = re.sub(r"^(un|une|le|la|l'|des?)\s+", "", topic, flags=re.I).strip()
+    if not topic:
+        topic = "l'intelligence artificielle"
+    return kind, topic, word_count
+
+
+def extract_openai_text(payload: dict[str, Any]) -> str:
+    output_text = payload.get("output_text")
+    if isinstance(output_text, str) and output_text.strip():
+        return output_text.strip()
+
+    chunks: list[str] = []
+
+    def walk(value: Any) -> None:
+        if isinstance(value, dict):
+            if value.get("type") in {"output_text", "text"} and isinstance(value.get("text"), str):
+                chunks.append(value["text"])
+            for nested in value.values():
+                walk(nested)
+        elif isinstance(value, list):
+            for item in value:
+                walk(item)
+
+    walk(payload.get("output"))
+    text = "\n".join(part.strip() for part in chunks if part.strip())
+    if not text:
+        raise RuntimeError("OpenAI n'a pas renvoye de texte exploitable.")
+    return text
+
+
+def generate_text_with_openai(topic: str, word_count: int) -> str:
+    api_key = os.environ.get("OPENAI_API_KEY", "").strip()
+    if not api_key:
+        raise RuntimeError("Ajoute OPENAI_API_KEY dans .env pour activer la redaction IA.")
+
+    prompt = (
+        "Tu rediges pour le site francais d'un evenement convivial appele \"L'IA a la cool\". "
+        "Ecris un texte clair, chaleureux, concret, sans jargon inutile. "
+        f"Sujet: {topic}. Longueur cible: environ {word_count} mots. "
+        "Structure le texte en paragraphes courts. Ne mets pas de Markdown, pas de titre principal, "
+        "pas de liste a puces sauf si c'est vraiment necessaire."
+    )
+    body = {
+        "model": os.environ.get("OPENAI_TEXT_MODEL", OPENAI_TEXT_MODEL),
+        "input": prompt,
+    }
+    request = urllib.request.Request(
+        "https://api.openai.com/v1/responses",
+        data=json.dumps(body).encode("utf-8"),
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=120) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        details = exc.read().decode("utf-8", errors="replace")
+        raise RuntimeError(f"Erreur OpenAI: {details}") from exc
+    return extract_openai_text(payload)
+
+
+def process_write_command(text: str) -> tuple[str, str] | None:
+    command = extract_write_command(text)
+    if not command:
+        return None
+    kind, topic, word_count = command
+    generated = generate_text_with_openai(topic, word_count)
+    title = title_from_slug(topic) if topic == slugify(topic) else topic[:90]
+    if kind == "page":
+        paths = create_topic_page(title, generated)
+        commit = publish_paths(paths, f"Add Telegram generated page: {slugify(topic)}")
+        return "Texte redige dans une page", commit
+    paths = create_topic_section(title, generated)
+    commit = publish_paths(paths, f"Add Telegram generated section: {slugify(topic)}")
+    return "Texte redige dans une section", commit
 
 
 def add_nav_link(document: str, href: str, label: str) -> str:
@@ -498,7 +594,7 @@ def handle_text(token: str, state: dict[str, Any], message: dict[str, Any]) -> N
         send_message(
             token,
             chat_id,
-            "Envoie une photo avec une legende comme: 'ajoute dans outils' ou 'remplace hero'. Tu peux aussi ecrire: 'ajoute une section sur ...' ou 'ajoute une page sur ...'. Pour enlever le dernier ajout: 'annule'.",
+            "Envoie une photo avec une legende comme: 'ajoute dans outils' ou 'remplace hero'. Tu peux aussi ecrire: 'ajoute une section sur ...', 'ajoute une page sur ...' ou 'redige un texte de 300 mots sur ...'. Pour enlever le dernier ajout: 'annule'.",
         )
         return
     pending = state.setdefault("pending", {}).pop(str(chat_id), None)
@@ -518,10 +614,21 @@ def handle_text(token: str, state: dict[str, Any], message: dict[str, Any]) -> N
             action, commit = topic_result
             send_message(token, chat_id, f"{action} et publiee sur GitHub. {commit}")
             return
+        if extract_write_command(text):
+            try:
+                send_message(token, chat_id, "Je redige le texte, je l'ajoute au site, puis je publie...")
+                write_result = process_write_command(text)
+                if write_result:
+                    action, commit = write_result
+                    send_message(token, chat_id, f"{action} et publie sur GitHub. {commit}")
+                    return
+            except Exception as exc:
+                send_message(token, chat_id, f"Impossible de rediger: {exc}")
+                raise
         send_message(
             token,
             chat_id,
-            "Envoie une photo, ecris 'ajoute une section sur ...', 'ajoute une page sur ...', ou 'annule'.",
+            "Envoie une photo, ecris 'ajoute une section sur ...', 'redige un texte de 300 mots sur ...', ou 'annule'.",
         )
         return
     process_photo_instruction(token, chat_id, pending, text)
