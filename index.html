@@ -342,6 +342,82 @@
       color: var(--muted);
     }
 
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .media-card {
+      display: flex;
+      min-height: 100%;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      color: var(--ink);
+      text-decoration: none;
+      transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+    }
+
+    .media-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--line-strong);
+      box-shadow: var(--shadow);
+    }
+
+    .media-thumb {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .media-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .media-thumb::after {
+      content: "▶";
+      position: absolute;
+      left: 14px;
+      bottom: 12px;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(17, 24, 39, 0.9);
+      color: white;
+      font-size: 1rem;
+      font-weight: 900;
+    }
+
+    .media-body {
+      padding: 16px;
+    }
+
+    .media-body p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .media-note {
+      display: inline-flex;
+      width: fit-content;
+      margin-bottom: 10px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--yellow-soft);
+      color: #765307;
+      font-size: 0.78rem;
+      font-weight: 850;
+    }
+
     .tag {
       display: inline-flex;
       align-items: center;
@@ -586,6 +662,7 @@
       .grid.two,
       .grid.three,
       .grid.four,
+      .media-grid,
       .image-strip {
         grid-template-columns: 1fr;
       }
@@ -641,6 +718,7 @@
         <a href="#reperes">Repères</a>
         <a href="#usages">Usages</a>
         <a href="#outils">Outils</a>
+        <a href="#multimedia">Multimédia</a>
         <a href="#glossaire">Glossaire</a>
       </div>
     </div>
@@ -888,6 +966,61 @@
         <div class="tool-row"><div>Agents IA 24/7</div><div><strong>Hermes Agent sur VPS</strong><br>Agent autonome qui tourne en continu.</div><div>Automatiser des tâches récurrentes avec mémoire.</div><div>Technique.</div></div>
         <div class="tool-row"><div>SEO complet</div><div><strong>Distribb</strong><br>Articles SEO, backlinks et stratégie de visibilité.</div><div>Gagner du trafic organique sans tout faire à la main.</div><div>Oui si la personne a un site.</div></div>
         <div class="tool-row"><div>Backlinks SEO</div><div><strong>Dofollowback</strong><br>Obtenir des liens dofollow.</div><div>Booster l'autorité d'un site existant.</div><div>Usage SEO spécifique.</div></div>
+      </div>
+    </section>
+
+    <section id="multimedia">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Multimédia</span>
+          <h2>Podcasts et vidéos à connaître</h2>
+        </div>
+        <p class="lead">Quelques contenus faciles à partager pour continuer à explorer après la rencontre : culture générale IA, remix créatifs, veille et second cerveau.</p>
+      </div>
+      <div class="media-grid">
+        <a class="media-card" href="https://www.youtube.com/watch?v=6QBy_Oa5ZmM" target="_blank" rel="noopener">
+          <div class="media-thumb">
+            <img src="https://img.youtube.com/vi/6QBy_Oa5ZmM/hqdefault.jpg" alt="Vidéo YouTube sur l'IA.">
+          </div>
+          <div class="media-body">
+            <span class="media-note">14 millions de vues</span>
+            <h3>Papaoutai, remix IA à gros impact</h3>
+            <p>Un exemple très parlant pour montrer que l'IA touche déjà la voix, la musique et la culture populaire.</p>
+          </div>
+        </a>
+        <a class="media-card" href="https://www.youtube.com/watch?v=uoVPUH3cxlU" target="_blank" rel="noopener">
+          <div class="media-thumb">
+            <img src="https://img.youtube.com/vi/uoVPUH3cxlU/hqdefault.jpg" alt="Remix IA autour de Papaoutai.">
+          </div>
+          <div class="media-body">
+            <span class="media-note">Remix IA</span>
+            <h3>Un autre remix IA de Papaoutai</h3>
+            <p>À comparer avec le premier pour discuter imitation, créativité, droits, émotion et perception du public.</p>
+          </div>
+        </a>
+        <a class="media-card" href="https://www.youtube.com/watch?v=TX5YmIthG14" target="_blank" rel="noopener">
+          <div class="media-thumb">
+            <img src="https://img.youtube.com/vi/TX5YmIthG14/hqdefault.jpg" alt="Vidéo Silicon Carne sur l'état de l'IA.">
+          </div>
+          <div class="media-body">
+            <span class="media-note">Podcast 2x/semaine</span>
+            <h3>Silicon Carne</h3>
+            <p>Explique très bien où en est l'IA, avec une veille régulière et accessible.</p>
+          </div>
+        </a>
+        <a class="media-card" href="https://www.youtube.com/watch?v=IubQUC9TL2w" target="_blank" rel="noopener">
+          <div class="media-thumb">
+            <img src="https://img.youtube.com/vi/IubQUC9TL2w/hqdefault.jpg" alt="Vidéo d'Eliott Meunier sur le second cerveau.">
+          </div>
+          <div class="media-body">
+            <span class="media-note">Vulgarisation FR</span>
+            <h3>Eliott Meunier</h3>
+            <p>Très clair pour comprendre l'IA, les usages personnels et l'idée de second cerveau.</p>
+          </div>
+        </a>
+      </div>
+      <div class="prompt-box" style="margin-top: 18px;">
+        <strong>À tester :</strong> comparer deux remix IA, un podcast de veille et une vidéo de vulgarisation. On voit vite que l'IA n'est pas qu'un outil de texte : c'est déjà un média culturel complet.
       </div>
     </section>
 
