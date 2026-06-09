@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IAcool - L'IA à la cool</title>
+  <title>AI.cool - L'IA à la cool</title>
   <meta name="description" content="L'IA à la cool : comprendre, tester et discuter l'intelligence artificielle sans jargon.">
+  <link rel="icon" href="aicool-mark.svg" type="image/svg+xml">
   <style>
     :root {
       color-scheme: light;
@@ -83,25 +84,14 @@
     .brand {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
       color: var(--ink);
       text-decoration: none;
     }
 
-    .brand-mark {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      display: grid;
-      place-items: center;
-      background: var(--yellow);
-      border: 1px solid #efbd35;
-      font-weight: 900;
-      color: #1b365d;
-    }
-
-    .brand span:last-child {
-      font-weight: 850;
+    .brand-logo {
+      width: 172px;
+      height: auto;
+      display: block;
     }
 
     .nav-links {
@@ -710,8 +700,7 @@
   <nav class="site-nav" aria-label="Navigation principale">
     <div class="nav-inner">
       <a class="brand" href="#top" aria-label="Retour en haut">
-        <span class="brand-mark">AI</span>
-        <span>IAcool</span>
+        <img class="brand-logo" src="aicool-logo.svg" alt="AI.cool">
       </a>
       <div class="nav-links">
         <a href="#news">News</a>

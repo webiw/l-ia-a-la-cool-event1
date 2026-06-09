@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">AI.cool mark</title>
+  <desc id="desc">A clear AI monogram separated from cool branding to avoid reading alcohol.</desc>
+  <rect width="128" height="128" rx="28" fill="#087f83"/>
+  <path d="M23 82 42 36h12l19 46H60l-4-10H40l-4 10H23Zm21-21h8l-4-11-4 11Z" fill="#fffdf8"/>
+  <path d="M82 36h14v46H82V36Z" fill="#ffd66b"/>
+  <circle cx="89" cy="25" r="7" fill="#ffd66b"/>
+  <path d="M102 88c-8 8-21 11-34 8-14-4-26-13-34-26" fill="none" stroke="#fffdf8" stroke-width="7" stroke-linecap="round"/>
+</svg>
