@@ -209,6 +209,12 @@
       color: white;
     }
 
+    .button.warm {
+      border-color: var(--orange);
+      background: var(--orange);
+      color: white;
+    }
+
     .hero-media {
       position: relative;
       padding: 10px;
@@ -220,7 +226,7 @@
 
     .hero-media img {
       border-radius: 6px;
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 16 / 10;
       object-fit: cover;
       object-position: center;
     }
@@ -482,7 +488,7 @@
 
     .image-strip {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 18px;
     }
 
@@ -494,8 +500,37 @@
       background: var(--paper);
     }
 
+    .image-link {
+      display: block;
+      position: relative;
+      color: inherit;
+      text-decoration: none;
+    }
+
     .image-strip img {
+      width: 100%;
       border-radius: 6px;
+      aspect-ratio: 4 / 5.65;
+      object-fit: cover;
+      object-position: top center;
+      border: 1px solid var(--line);
+    }
+
+    .image-link::after {
+      content: "Ouvrir en grand";
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(17, 24, 39, 0.86);
+      color: white;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .image-link:hover::after {
+      background: var(--orange);
     }
 
     figcaption {
@@ -618,11 +653,12 @@
       <p class="hero-lead">Une rencontre conviviale pour mieux comprendre l'intelligence artificielle, sans jargon et sans panique. Le but : repartir avec des idées simples à tester chez soi dès demain.</p>
       <div class="hero-actions">
         <a class="button primary" href="#mini-defi">Tester ce soir</a>
+        <a class="button warm" href="#supports">Ouvrir les supports</a>
         <a class="button" href="glossaire_termes_ia_simple.pdf">Ouvrir le glossaire PDF</a>
       </div>
     </div>
     <div class="hero-media">
-      <img src="ia-cool-1.png" alt="Infographie L'IA à la cool : histoire, repères et usages de l'intelligence artificielle.">
+      <img src="FB-event1.png" alt="Bannière de l'événement L'IA à la cool.">
     </div>
   </header>
 
@@ -996,18 +1032,28 @@
       <div class="section-head">
         <div>
           <span class="eyebrow">Supports visuels</span>
-          <h2>Les deux infographies complètes</h2>
+          <h2>Les trois supports à ouvrir en grand</h2>
         </div>
-        <p class="lead">Elles restent accessibles telles quelles, avec les informations reprises dans la page en version texte.</p>
+        <p class="lead">Clique sur une image pour ouvrir le fichier original en grand. Pratique pour ceux qui n'auront pas les supports papier.</p>
       </div>
       <div class="image-strip">
         <figure>
-          <img src="ia-cool-1.png" alt="Infographie complète L'IA à la cool, page 1.">
+          <a class="image-link" href="ia-cool-1.png" target="_blank" rel="noopener">
+            <img src="ia-cool-1.png" alt="Infographie complète L'IA à la cool, page 1.">
+          </a>
           <figcaption>Page 1 : histoire, repères 2025-2026, compétition mondiale et capacités de base.</figcaption>
         </figure>
         <figure>
-          <img src="ia-cool-2.png" alt="Infographie complète L'IA à la cool, page 2.">
+          <a class="image-link" href="ia-cool-2.png" target="_blank" rel="noopener">
+            <img src="ia-cool-2.png" alt="Infographie complète L'IA à la cool, page 2.">
+          </a>
           <figcaption>Page 2 : usages locaux, outils simples, prompt, bons réflexes, enfants et mini-défis.</figcaption>
+        </figure>
+        <figure>
+          <a class="image-link" href="L_IA_et_l_avenir_humain2.png" target="_blank" rel="noopener">
+            <img src="L_IA_et_l_avenir_humain2.png" alt="Support visuel L'IA et l'avenir humain.">
+          </a>
+          <figcaption>L'IA et l'avenir humain : support complémentaire à consulter en grand.</figcaption>
         </figure>
       </div>
       <div class="download-band" style="margin-top: 22px;">
