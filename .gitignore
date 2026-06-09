@@ -1,2 +1,7 @@
 .firecrawl/
 NEWS/*.eml
+.env
+.telegram-bot-state.json
+*.log
+__pycache__/
+*.pyc
