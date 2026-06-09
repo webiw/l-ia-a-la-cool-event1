@@ -3,395 +3,1012 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>L'IA a la cool - outils IA</title>
-  <meta name="description" content="Recap simple des meilleurs outils IA pour l'event L'IA a la cool.">
+  <title>IAcool - L'IA à la cool</title>
+  <meta name="description" content="L'IA à la cool : comprendre, tester et discuter l'intelligence artificielle sans jargon.">
   <style>
     :root {
-      --bg: #f7f4ef;
-      --ink: #151515;
-      --muted: #5d625f;
-      --line: #ded7cc;
-      --panel: #ffffff;
-      --accent: #ef5a3c;
-      --accent-dark: #9f2e23;
-      --green: #25705b;
-      --blue: #285c8f;
+      color-scheme: light;
+      --canvas: #fffdf8;
+      --paper: #ffffff;
+      --paper-warm: #fff7e8;
+      --surface: #f7f5ef;
+      --ink: #111827;
+      --ink-soft: #374151;
+      --muted: #697076;
+      --line: #e6dfd3;
+      --line-strong: #d3c6b5;
+      --orange: #ee6043;
+      --orange-deep: #b43f2c;
+      --teal: #087f83;
+      --teal-soft: #e6f6f5;
+      --blue: #2f66b1;
+      --blue-soft: #e9f1ff;
+      --yellow: #ffd66b;
+      --yellow-soft: #fff4c7;
+      --green: #2c7a61;
+      --green-soft: #e9f6ef;
+      --rose-soft: #fff0ed;
+      --shadow: 0 18px 48px rgba(58, 43, 24, 0.08);
+      --radius: 8px;
+      --max: 1180px;
     }
 
     * {
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--ink);
-      background: var(--bg);
-      line-height: 1.5;
+      background: var(--canvas);
+      line-height: 1.55;
     }
 
     img {
-      max-width: 100%;
       display: block;
+      max-width: 100%;
     }
 
     a {
-      color: var(--accent-dark);
+      color: var(--orange-deep);
       font-weight: 700;
       text-decoration-thickness: 0.08em;
       text-underline-offset: 0.18em;
     }
 
-    .hero {
-      min-height: 84vh;
-      display: grid;
-      align-items: end;
-      padding: 28px;
-      background:
-        linear-gradient(180deg, rgba(21, 21, 21, 0.04), rgba(21, 21, 21, 0.72)),
-        url("FB-event1.png") center / cover no-repeat;
-      color: white;
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(230, 223, 211, 0.86);
+      background: rgba(255, 253, 248, 0.9);
+      backdrop-filter: blur(14px);
     }
 
-    .hero-inner {
-      width: min(1120px, 100%);
+    .nav-inner {
+      width: min(var(--max), calc(100% - 32px));
+      min-height: 60px;
       margin: 0 auto;
-      padding-bottom: clamp(24px, 6vw, 76px);
       display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      text-align: right;
-    }
-
-    .eyebrow {
-      width: fit-content;
-      padding: 7px 11px;
-      margin-bottom: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.52);
-      background: rgba(255, 255, 255, 0.12);
-      font-size: 0.78rem;
-      font-weight: 800;
-      letter-spacing: 0;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      max-width: 780px;
-      margin: 0;
-      font-size: clamp(2.55rem, 8vw, 6.6rem);
-      line-height: 0.95;
-      letter-spacing: 0;
-    }
-
-    .hero p {
-      max-width: 650px;
-      margin: 22px 0 0;
-      font-size: clamp(1rem, 2vw, 1.35rem);
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    main {
-      width: min(1120px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 48px 0 72px;
-    }
-
-    section {
-      padding: 30px 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    h2 {
-      margin: 0 0 16px;
-      font-size: clamp(1.55rem, 3vw, 2.35rem);
-      line-height: 1.08;
-      letter-spacing: 0;
-    }
-
-    .lead {
-      max-width: 760px;
-      margin: 0 0 22px;
-      color: var(--muted);
-      font-size: 1.05rem;
-    }
-
-    .tool-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .tool {
-      min-height: 190px;
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--panel);
-    }
-
-    .tool strong {
-      display: block;
-      margin-bottom: 7px;
-      font-size: 1.05rem;
-    }
-
-    .tool span {
-      display: inline-flex;
-      align-items: center;
-      min-height: 27px;
-      padding: 3px 8px;
-      margin-bottom: 12px;
-      border-radius: 999px;
-      background: #f0ece5;
-      color: #3a3a37;
-      font-size: 0.82rem;
-      font-weight: 800;
-    }
-
-    .tool p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.96rem;
-    }
-
-    .starter {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .starter-item {
-      padding: 18px;
-      border-left: 5px solid var(--accent);
-      background: #fff9f1;
-    }
-
-    .starter-item:nth-child(2) {
-      border-left-color: var(--blue);
-    }
-
-    .starter-item:nth-child(3) {
-      border-left-color: var(--green);
-    }
-
-    .starter-item h3 {
-      margin: 0 0 8px;
-      font-size: 1.05rem;
-    }
-
-    .starter-item p {
-      margin: 0;
-      color: var(--muted);
-    }
-
-    .compare {
-      overflow-x: auto;
-      border: 1px solid var(--line);
-      background: var(--panel);
-    }
-
-    table {
-      width: 100%;
-      min-width: 760px;
-      border-collapse: collapse;
-    }
-
-    th,
-    td {
-      padding: 13px 14px;
-      border-bottom: 1px solid var(--line);
-      text-align: left;
-      vertical-align: top;
-    }
-
-    th {
-      background: #ece5da;
-      font-size: 0.88rem;
-      text-transform: uppercase;
-    }
-
-    td {
-      color: var(--muted);
-    }
-
-    td strong {
-      color: var(--ink);
-    }
-
-    .download {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
       align-items: center;
       justify-content: space-between;
-      padding: 20px;
-      background: var(--ink);
-      color: white;
+      gap: 16px;
     }
 
-    .download p {
-      margin: 0;
-      color: rgba(255, 255, 255, 0.78);
-    }
-
-    .download a {
+    .brand {
       display: inline-flex;
       align-items: center;
-      min-height: 42px;
-      padding: 0 15px;
-      border-radius: 6px;
-      background: white;
+      gap: 10px;
       color: var(--ink);
       text-decoration: none;
     }
 
-    footer {
-      width: min(1120px, calc(100% - 32px));
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: var(--yellow);
+      border: 1px solid #efbd35;
+      font-weight: 900;
+      color: #1b365d;
+    }
+
+    .brand span:last-child {
+      font-weight: 850;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 4px;
+    }
+
+    .nav-links a {
+      padding: 8px 10px;
+      border-radius: 6px;
+      color: var(--ink-soft);
+      font-size: 0.9rem;
+      font-weight: 650;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover {
+      background: var(--surface);
+      color: var(--ink);
+    }
+
+    .hero {
+      width: min(var(--max), calc(100% - 32px));
       margin: 0 auto;
-      padding: 0 0 34px;
+      padding: 42px 0 22px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+      gap: 32px;
+      align-items: center;
+    }
+
+    .hero-copy {
+      padding: 24px 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 30px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--teal);
+      font-size: 0.78rem;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin-top: 18px;
+      font-size: clamp(3.1rem, 8vw, 6.2rem);
+      font-weight: 900;
+    }
+
+    .script {
+      color: var(--orange);
+      font-style: italic;
+      font-weight: 760;
+    }
+
+    .hero-lead {
+      max-width: 680px;
+      margin: 22px 0 0;
+      color: var(--ink-soft);
+      font-size: clamp(1.12rem, 2vw, 1.45rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      color: var(--ink);
+      background: var(--paper);
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .button.primary {
+      border-color: var(--teal);
+      background: var(--teal);
+      color: white;
+    }
+
+    .hero-media {
+      position: relative;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-media img {
+      border-radius: 6px;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    main {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 16px 0 84px;
+    }
+
+    section {
+      padding: 56px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.82fr) minmax(260px, 0.48fr);
+      gap: 32px;
+      align-items: end;
+      margin-bottom: 26px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      font-weight: 860;
+    }
+
+    h3 {
+      font-size: 1.16rem;
+      font-weight: 820;
+    }
+
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .news-panel {
+      padding: 22px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .news-top {
+      display: grid;
+      grid-template-columns: minmax(0, 0.82fr) minmax(300px, 0.42fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 650;
+    }
+
+    .news-title {
+      margin-top: 10px;
+      font-size: clamp(1.7rem, 3vw, 2.55rem);
+    }
+
+    .quote-card {
+      padding: 18px;
+      border-left: 6px solid var(--orange);
+      background: var(--rose-soft);
+      color: var(--ink-soft);
+    }
+
+    .quote-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--ink);
+      font-size: 1.02rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid.four {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .card,
+    .tile,
+    .term {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+    }
+
+    .card {
+      padding: 20px;
+    }
+
+    .card p,
+    .tile p,
+    .term p {
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      min-height: 28px;
+      padding: 0 9px;
+      margin-bottom: 12px;
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--ink-soft);
+      font-size: 0.78rem;
+      font-weight: 820;
+    }
+
+    .tag.orange {
+      background: var(--rose-soft);
+      color: var(--orange-deep);
+    }
+
+    .tag.blue {
+      background: var(--blue-soft);
+      color: var(--blue);
+    }
+
+    .tag.green {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .tag.yellow {
+      background: var(--yellow-soft);
+      color: #7a5400;
+    }
+
+    .stat {
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--teal);
+      font-size: clamp(1.7rem, 3.5vw, 2.7rem);
+      line-height: 1;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .moment {
+      padding: 16px;
+      border-top: 5px solid var(--teal);
+      background: var(--paper);
+      border-radius: 8px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .moment time {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--orange);
+      font-size: 1.25rem;
+      font-weight: 900;
+    }
+
+    .tool-row {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.42fr) minmax(0, 1fr) minmax(0, 1fr) minmax(170px, 0.4fr);
+      border: 1px solid var(--line);
+      border-bottom: 0;
+      background: var(--paper);
+    }
+
+    .tool-row:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .tool-row > div {
+      padding: 14px 16px;
+      border-right: 1px solid var(--line);
+    }
+
+    .tool-row > div:last-child {
+      border-right: 0;
+    }
+
+    .tool-head {
+      background: var(--surface);
+      color: var(--ink);
+      font-size: 0.82rem;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    .prompt-box {
+      padding: 22px;
+      border: 2px solid var(--yellow);
+      border-radius: 8px;
+      background: #fffaf0;
+    }
+
+    .prompt-formula {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .prompt-step {
+      padding: 14px;
+      border: 1px dashed #d79b22;
+      border-radius: 8px;
+      background: white;
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .prompt-example {
+      margin: 0;
+      padding: 18px;
+      border-left: 5px solid var(--orange);
+      background: white;
+      color: var(--ink-soft);
+      font-style: italic;
+    }
+
+    .image-strip {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .image-strip figure {
+      margin: 0;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+    }
+
+    .image-strip img {
+      border-radius: 6px;
+    }
+
+    figcaption {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .term {
+      padding: 16px;
+    }
+
+    .term strong {
+      display: block;
+      color: var(--ink);
+    }
+
+    .download-band {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 24px;
+      border-radius: 8px;
+      background: var(--ink);
+      color: white;
+    }
+
+    .download-band p {
+      margin: 6px 0 0;
+      color: rgba(255, 255, 255, 0.76);
+    }
+
+    .download-band a {
+      border-color: white;
+      background: white;
+      color: var(--ink);
+    }
+
+    footer {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 0 0 42px;
       color: var(--muted);
       font-size: 0.92rem;
     }
 
-    @media (max-width: 820px) {
-      .hero {
-        min-height: 78vh;
-        padding: 18px;
-      }
-
-      .hero-inner {
-        align-items: flex-start;
-        text-align: left;
-      }
-
-      main {
-        padding-top: 34px;
-      }
-
-      .tool-grid,
-      .starter {
+    @media (max-width: 960px) {
+      .hero,
+      .section-head,
+      .news-top,
+      .grid.two,
+      .grid.three,
+      .grid.four,
+      .image-strip {
         grid-template-columns: 1fr;
+      }
+
+      .timeline {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .prompt-formula {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .tool-row {
+        min-width: 900px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .nav-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 12px 0;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+      }
+
+      .hero {
+        padding-top: 24px;
+      }
+
+      .timeline,
+      .prompt-formula {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 42px 0;
       }
     }
   </style>
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-inner">
-      <div class="eyebrow">Event L'IA a la cool</div>
-      <h1>Les outils IA a connaitre</h1>
-      <p>Un recap clair pour choisir le bon outil selon le besoin : assistant, image, video, SEO, pub ou automatisation.</p>
+  <nav class="site-nav" aria-label="Navigation principale">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="Retour en haut">
+        <span class="brand-mark">AI</span>
+        <span>IAcool</span>
+      </a>
+      <div class="nav-links">
+        <a href="#news">News</a>
+        <a href="#reperes">Repères</a>
+        <a href="#usages">Usages</a>
+        <a href="#outils">Outils</a>
+        <a href="#glossaire">Glossaire</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="hero-copy">
+      <span class="eyebrow">Comprendre · tester · discuter — Cabriès</span>
+      <h1>L'IA <span class="script">à la cool</span></h1>
+      <p class="hero-lead">Une rencontre conviviale pour mieux comprendre l'intelligence artificielle, sans jargon et sans panique. Le but : repartir avec des idées simples à tester chez soi dès demain.</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#mini-defi">Tester ce soir</a>
+        <a class="button" href="glossaire_termes_ia_simple.pdf">Ouvrir le glossaire PDF</a>
+      </div>
+    </div>
+    <div class="hero-media">
+      <img src="IA%20a%20la%20cool1.png" alt="Infographie L'IA à la cool : histoire, repères et usages de l'intelligence artificielle.">
     </div>
   </header>
 
   <main>
-    <section>
-      <h2>Le trio pour demarrer</h2>
-      <p class="lead">Pour une audience qui veut comprendre et utiliser l'IA sans setup technique, ces trois outils couvrent deja l'essentiel.</p>
-      <div class="starter">
-        <article class="starter-item">
-          <h3>ChatGPT</h3>
-          <p>Ton assistant pour ecrire, reflechir, organiser, synthetiser et expliquer.</p>
-        </article>
-        <article class="starter-item">
-          <h3>ChatGPT Images 2.0</h3>
-          <p>Tu decris une image, il te la cree ou la modifie par conversation.</p>
-        </article>
-        <article class="starter-item">
-          <h3>Distribb</h3>
-          <p>Pour etre visible sur Google avec contenu SEO, strategie et backlinks.</p>
-        </article>
-      </div>
-    </section>
-
-    <section>
-      <h2>Outils par usage</h2>
-      <p class="lead">La selection complete, avec le meilleur cas d'usage pour chaque categorie.</p>
-      <div class="tool-grid">
-        <article class="tool">
-          <span>Assistant IA</span>
-          <strong>ChatGPT / GPT-5.5</strong>
-          <p>Le meilleur point d'entree pour reflechir, ecrire, expliquer et creer des plans.</p>
-        </article>
-        <article class="tool">
-          <span>Images IA</span>
-          <strong>ChatGPT Images 2.0</strong>
-          <p>Posts reseaux, visuels de marque, mockups et idees creatives.</p>
-        </article>
-        <article class="tool">
-          <span>Video IA</span>
-          <strong>Seedance 2.0</strong>
-          <p>Clips courts, videos creatives et rendus premium pour profils plus avances.</p>
-        </article>
-        <article class="tool">
-          <span>Pub / Ads</span>
-          <strong>GoMarble</strong>
-          <p>Analyser et optimiser les campagnes quand on gere deja Meta ou Google Ads.</p>
-        </article>
-        <article class="tool">
-          <span>LLM valeur</span>
-          <strong>Kimi K2 Thinking</strong>
-          <p>Gros volumes, automatisations, agents et taches longues via API.</p>
-        </article>
-        <article class="tool">
-          <span>SEO</span>
-          <strong>Distribb + Dofollowback</strong>
-          <p>Produire du contenu, construire des backlinks et renforcer l'autorite d'un site.</p>
-        </article>
-      </div>
-    </section>
-
-    <section>
-      <h2>Comparaisons simples</h2>
-      <div class="compare">
-        <table>
-          <thead>
-            <tr>
-              <th>Si la personne hesite entre...</th>
-              <th>Choisir plutot...</th>
-              <th>Pourquoi</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>ChatGPT, Kimi, DeepSeek, Claude</td>
-              <td><strong>ChatGPT</strong></td>
-              <td>Le plus simple pour debuter, sans setup technique.</td>
-            </tr>
-            <tr>
-              <td>ChatGPT Images ou Seedance</td>
-              <td><strong>ChatGPT Images</strong> pour image, <strong>Seedance</strong> pour video</td>
-              <td>Image statique et video ne servent pas le meme usage.</td>
-            </tr>
-            <tr>
-              <td>Distribb ou Dofollowback</td>
-              <td><strong>Distribb</strong></td>
-              <td>Plus complet : contenu, SEO et backlinks.</td>
-            </tr>
-            <tr>
-              <td>Kimi ou DeepSeek</td>
-              <td><strong>DeepSeek</strong> pour cout, <strong>Kimi</strong> pour agents</td>
-              <td>Deux outils API avances, a choisir selon volume ou raisonnement long.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section>
-      <div class="download">
-        <div>
-          <strong>Support PDF</strong>
-          <p>Le glossaire simple des termes IA reste disponible en telechargement.</p>
+    <section id="news">
+      <div class="news-panel">
+        <div class="news-top">
+          <div>
+            <span class="eyebrow">Dernières news IA · 9 juin 2026</span>
+            <h2 class="news-title">Les LLM ont gagné l'adoption. La vraie question devient : que valent leurs limites ?</h2>
+            <p class="lead">Résumé de la newsletter “Les limites des LLMs” d'Eliott, Perspectives : les modèles de langage sont partout, mais leur architecture reste contestée pour les tâches qui demandent une compréhension du monde réel.</p>
+          </div>
+          <aside class="quote-card">
+            <strong>Idée à retenir</strong>
+            Les modèles deviennent des commodités. La valeur n'est plus seulement dans le modèle, mais dans ce que l'on construit avec lui.
+          </aside>
         </div>
-        <a href="glossaire_termes_ia_simple.pdf">Ouvrir le PDF</a>
+        <div class="grid three" style="margin-top: 24px;">
+          <article class="card">
+            <span class="tag green">Adoption</span>
+            <h3>ChatGPT franchit 1 milliard d'utilisateurs</h3>
+            <p>En trois ans, l'IA conversationnelle est passée de curiosité à réflexe quotidien pour une partie massive du grand public.</p>
+          </article>
+          <article class="card">
+            <span class="tag orange">Infrastructure</span>
+            <h3>La guerre du calcul change d'échelle</h3>
+            <p>La newsletter cite Google et Anthropic comme exemples de dépenses mensuelles gigantesques pour obtenir plus de puissance de calcul.</p>
+          </article>
+          <article class="card">
+            <span class="tag blue">Commoditisation</span>
+            <h3>Les modèles se banalisent vite</h3>
+            <p>Microsoft lance ses propres modèles internes ; MiniMax saute une génération. Les labs vont presque plus vite qu'ils ne publient.</p>
+          </article>
+        </div>
+        <div class="grid two" style="margin-top: 16px;">
+          <article class="card">
+            <h3>La critique de Yann LeCun</h3>
+            <p>Un LLM manipule très bien le langage, mais il n'a pas vraiment de modèle du monde. Pour la robotique, les agents et la prédiction des conséquences, ce plafond devient important.</p>
+          </article>
+          <article class="card">
+            <h3>La piste JEPA</h3>
+            <p>Au lieu de prédire mot par mot ou pixel par pixel, JEPA apprend des représentations internes : ignorer le bruit, comprendre l'essentiel, planifier à plusieurs niveaux d'abstraction.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="idee">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">L'idée en une phrase</span>
+          <h2>L'IA ne remplace pas l'humain curieux. Elle l'amplifie.</h2>
+        </div>
+        <p class="lead">L'IA est un nouvel outil pour écrire, apprendre, créer, analyser et gagner du temps. Elle ne remplace pas l'humain : elle aide surtout les personnes curieuses qui apprennent à bien s'en servir.</p>
+      </div>
+      <div class="grid three">
+        <article class="card">
+          <span class="tag yellow">Comprendre</span>
+          <h3>Moins de jargon</h3>
+          <p>Commencer par les mots simples : prompt, modèle, hallucination, contexte, agent, RAG.</p>
+        </article>
+        <article class="card">
+          <span class="tag green">Tester</span>
+          <h3>Une tâche réelle</h3>
+          <p>Choisir une tâche pénible, répétitive ou bloquante que l'on pourrait déléguer à une IA dès demain.</p>
+        </article>
+        <article class="card">
+          <span class="tag orange">Discuter</span>
+          <h3>Pas de panique</h3>
+          <p>Voir l'IA comme un outil quotidien : gagner du temps, apprendre plus vite, créer, communiquer et tester de nouvelles idées.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="reperes">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Mini-histoire</span>
+          <h2>De la question de Turing aux agents multimodaux</h2>
+        </div>
+        <p class="lead">Quelques jalons suffisent pour comprendre pourquoi l'IA semble avoir accéléré d'un coup.</p>
+      </div>
+      <div class="timeline">
+        <article class="moment">
+          <time>1950</time>
+          Alan Turing pose la question : une machine peut-elle penser ?
+        </article>
+        <article class="moment">
+          <time>1997</time>
+          Deep Blue bat Garry Kasparov aux échecs.
+        </article>
+        <article class="moment">
+          <time>2012</time>
+          Le deep learning explose grâce aux données et aux cartes graphiques.
+        </article>
+        <article class="moment">
+          <time>2022</time>
+          ChatGPT rend l'IA grand public.
+        </article>
+        <article class="moment">
+          <time>2024-2026</time>
+          L'IA devient multimodale : texte, image, voix, vidéo, code et agents.
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Où en est-on ?</span>
+          <h2>Repères 2025-2026</h2>
+        </div>
+        <p class="lead">Les chiffres de l'infographie donnent l'ordre de grandeur : beaucoup d'argent, beaucoup d'adoption, beaucoup de vitesse.</p>
+      </div>
+      <div class="grid four">
+        <article class="stat">
+          <strong>122 Md$</strong>
+          <span>levés par OpenAI, pour une valorisation indiquée à 852 Md$.</span>
+        </article>
+        <article class="stat">
+          <strong>1,7 Md€</strong>
+          <span>levés par Mistral AI, avec une valorisation indiquée à 11,7 Md€.</span>
+        </article>
+        <article class="stat">
+          <strong>285,9 Md$</strong>
+          <span>d'investissements privés IA aux États-Unis en 2025.</span>
+        </article>
+        <article class="stat">
+          <strong>200 Md€</strong>
+          <span>annoncés dans le plan européen “AI Continent” pour accélérer l'IA en Europe.</span>
+        </article>
+      </div>
+      <div class="grid three" style="margin-top: 16px;">
+        <article class="card">
+          <span class="tag blue">États-Unis</span>
+          <h3>Plateformes et infrastructure</h3>
+          <p>Domination des investissements privés, des grandes plateformes et de l'infrastructure.</p>
+        </article>
+        <article class="card">
+          <span class="tag orange">Chine</span>
+          <h3>Progression rapide</h3>
+          <p>Modèles très compétitifs et forte puissance industrielle.</p>
+        </article>
+        <article class="card">
+          <span class="tag green">Europe / France</span>
+          <h3>Recherche et souveraineté</h3>
+          <p>Recherche solide, volonté de souveraineté et Mistral en vitrine, mais bataille encore difficile.</p>
+        </article>
+      </div>
+      <div class="prompt-box" style="margin-top: 16px;">
+        <strong>Message clé :</strong> l'Europe n'est pas absente, mais elle doit aller plus vite.
+      </div>
+    </section>
+
+    <section id="usages">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Usages concrets</span>
+          <h2>Ce que l'IA sait déjà faire près de chez nous</h2>
+        </div>
+        <p class="lead">Le plus important n'est pas de tout connaître. C'est d'oser essayer sur une situation réelle.</p>
+      </div>
+      <div class="grid three">
+        <article class="card"><span class="tag green">Artisan · BTP · jardin · piscine</span><h3>Gagner du temps terrain</h3><p>Devis, réponses clients, avant/après, check-lists chantier.</p></article>
+        <article class="card"><span class="tag orange">Commerçant · resto · cave · food truck</span><h3>Communiquer plus vite</h3><p>Menus, avis Google, promos, posts Instagram, traduction.</p></article>
+        <article class="card"><span class="tag blue">Association · bénévole</span><h3>Organiser sans s'épuiser</h3><p>Affiches, mails, comptes rendus, organisation d'événements.</p></article>
+        <article class="card"><span class="tag yellow">Parent · élève · étudiant</span><h3>Apprendre autrement</h3><p>Explications simples, quiz, révisions, histoires, langues.</p></article>
+        <article class="card"><span class="tag green">Indépendant · cadre · consultant</span><h3>Clarifier son travail</h3><p>Mails, synthèses, offres, brainstorming, comptes rendus.</p></article>
+        <article class="card"><span class="tag orange">Recherche d'emploi · administratif</span><h3>Passer à l'action</h3><p>CV, lettres, préparation d'entretien, formulaires.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Capacités immédiates</span>
+          <h2>Ce que l'IA sait déjà faire</h2>
+        </div>
+        <p class="lead">Les usages de base sont déjà très puissants quand on les relie à une vraie tâche.</p>
+      </div>
+      <div class="grid three">
+        <article class="card"><h3>Rédiger, résumer, reformuler</h3><p>Transformer un brouillon, clarifier une idée, synthétiser une réunion ou rendre un mail plus professionnel.</p></article>
+        <article class="card"><h3>Traduire et expliquer simplement</h3><p>Adapter le niveau, demander une analogie, créer une explication pour enfant, client ou collègue.</p></article>
+        <article class="card"><h3>Générer images et idées</h3><p>Créer une affiche, un visuel, une idée de logo, une illustration ou plusieurs pistes créatives.</p></article>
+        <article class="card"><h3>Analyser des documents</h3><p>Extraire les points clés d'un PDF, comparer des sources, préparer une FAQ ou une synthèse.</p></article>
+        <article class="card"><h3>Aider à apprendre ou enseigner</h3><p>Créer des quiz, corriger, simplifier, donner des exemples progressifs.</p></article>
+        <article class="card"><h3>Automatiser des tâches répétitives</h3><p>Préparer des relances, classer des informations, enchaîner plusieurs étapes avec des outils.</p></article>
+      </div>
+    </section>
+
+    <section id="outils">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Outils</span>
+          <h2>La sélection simple et la sélection avancée</h2>
+        </div>
+        <p class="lead">Pour l'événement, commencer par trois outils simples, puis garder les autres comme bonus pour aller plus loin.</p>
+      </div>
+      <div class="grid three">
+        <article class="card">
+          <span class="tag green">Débutant</span>
+          <h3>ChatGPT</h3>
+          <p>Discuter, rédiger, reformuler, réfléchir. Le meilleur point d'entrée sans setup technique.</p>
+        </article>
+        <article class="card">
+          <span class="tag yellow">Documents</span>
+          <h3>NotebookLM</h3>
+          <p>Travailler à partir de ses propres sources : résumer, créer une FAQ, une synthèse ou une mind map.</p>
+        </article>
+        <article class="card">
+          <span class="tag orange">Créatif</span>
+          <h3>Génération d'images</h3>
+          <p>Créer une affiche, un visuel, une idée de logo ou une illustration.</p>
+        </article>
+      </div>
+      <div class="table-wrap" style="margin-top: 22px;">
+        <div class="tool-row tool-head">
+          <div>Besoin</div><div>Outil</div><div>Meilleur cas d'usage</div><div>Basique ?</div>
+        </div>
+        <div class="tool-row"><div>Assistant IA général</div><div><strong>ChatGPT / GPT-5.5</strong><br>Réfléchir, écrire, synthétiser, expliquer, créer des plans.</div><div>Quand on veut un cerveau polyvalent simple à utiliser.</div><div>Oui, point d'entrée.</div></div>
+        <div class="tool-row"><div>Images IA</div><div><strong>ChatGPT Images 2.0</strong><br>Créer ou modifier des visuels par conversation.</div><div>Posts réseaux, visuels de marque, mockups, idées créatives.</div><div>Oui, recommandé.</div></div>
+        <div class="tool-row"><div>Vidéo IA</div><div><strong>Seedance 2.0</strong><br>Générer des vidéos IA avancées.</div><div>Clips courts, vidéos créatives, rendu premium.</div><div>Plutôt avancé.</div></div>
+        <div class="tool-row"><div>Pub / Ads</div><div><strong>GoMarble</strong><br>Analyser et optimiser des campagnes publicitaires.</div><div>Quand on gère Meta ou Google Ads et qu'on veut améliorer les performances.</div><div>Si on fait déjà de la pub.</div></div>
+        <div class="tool-row"><div>LLM bon rapport qualité/prix</div><div><strong>Kimi K2 Thinking</strong><br>Modèle puissant et moins cher via API/OpenRouter.</div><div>Gros volumes, automatisations, agents, tâches longues.</div><div>Profil avancé.</div></div>
+        <div class="tool-row"><div>LLM économique</div><div><strong>DeepSeek V4 Pro</strong><br>Alternative moins chère pour beaucoup de texte ou d'automatisation.</div><div>Budget serré, gros volume, tests API.</div><div>Public tech.</div></div>
+        <div class="tool-row"><div>LLM premium</div><div><strong>Claude Opus 4.7</strong><br>Raisonnement profond, écriture et code haut niveau.</div><div>Cas complexes où la qualité prime sur le coût.</div><div>Pas en premier choix.</div></div>
+        <div class="tool-row"><div>Agents IA 24/7</div><div><strong>Hermes Agent sur VPS</strong><br>Agent autonome qui tourne en continu.</div><div>Automatiser des tâches récurrentes avec mémoire.</div><div>Technique.</div></div>
+        <div class="tool-row"><div>SEO complet</div><div><strong>Distribb</strong><br>Articles SEO, backlinks et stratégie de visibilité.</div><div>Gagner du trafic organique sans tout faire à la main.</div><div>Oui si la personne a un site.</div></div>
+        <div class="tool-row"><div>Backlinks SEO</div><div><strong>Dofollowback</strong><br>Obtenir des liens dofollow.</div><div>Booster l'autorité d'un site existant.</div><div>Usage SEO spécifique.</div></div>
+      </div>
+    </section>
+
+    <section id="prompt">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Prompt</span>
+          <h2>La formule qui change tout</h2>
+        </div>
+        <p class="lead">Un bon prompt n'est pas magique. Il donne simplement le contexte, l'objectif, le public et le format attendu.</p>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-formula">
+          <div class="prompt-step">Contexte</div>
+          <div class="prompt-step">Objectif</div>
+          <div class="prompt-step">Public</div>
+          <div class="prompt-step">Format / ton</div>
+        </div>
+        <p class="prompt-example">Tu es mon assistant clair et pédagogique. Mon contexte : je suis artisan près d'Aix. Mon objectif : répondre à un client qui demande un devis. Le public : un particulier. Le format : un message simple, professionnel et chaleureux.</p>
+      </div>
+      <div class="grid two" style="margin-top: 18px;">
+        <article class="card">
+          <h3>Les bons réflexes</h3>
+          <p>Vérifier les infos importantes, demander des exemples concrets, comparer plusieurs réponses, préciser, corriger et recommencer.</p>
+        </article>
+        <article class="card">
+          <h3>Les limites à garder en tête</h3>
+          <p>Ne pas partager de données sensibles, garder son esprit critique, vérifier les chiffres et distinguer brouillon utile et vérité vérifiée.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="enfants">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Et les enfants ?</span>
+          <h2>Le vrai enjeu n'est pas d'interdire, mais d'apprendre à bien utiliser</h2>
+        </div>
+        <p class="lead">Poser de bonnes questions, vérifier, créer, comparer, expliquer. L'objectif est de ne pas se contenter de copier-coller.</p>
+      </div>
+      <div class="grid four">
+        <article class="card"><h3>Assistants vocaux</h3><p>Ils deviennent plus naturels.</p></article>
+        <article class="card"><h3>Agents</h3><p>Ils seront capables d'automatiser des tâches.</p></article>
+        <article class="card"><h3>IA intégrée</h3><p>Elle arrive partout : boulot, maison, école.</p></article>
+        <article class="card"><h3>Culture critique</h3><p>Un énorme besoin de curiosité, de culture générale et d'esprit critique.</p></article>
+      </div>
+      <div class="prompt-box" style="margin-top: 18px;">
+        <strong>Le risque n'est pas l'IA.</strong> Le risque, c'est de laisser les autres apprendre à l'utiliser à notre place.
+      </div>
+    </section>
+
+    <section id="mini-defi">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Mini défi de ce soir</span>
+          <h2>Trois tests simples avant demain</h2>
+        </div>
+        <p class="lead">Pas besoin d'une formation de 40 heures : une bonne première expérience suffit souvent à débloquer l'envie d'explorer.</p>
+      </div>
+      <div class="grid three">
+        <article class="card"><span class="tag green">1</span><h3>Explique-moi</h3><p>“Explique-moi ce sujet comme à un enfant de 10 ans.”</p></article>
+        <article class="card"><span class="tag orange">2</span><h3>Clarifie ce mail</h3><p>“Rends ce mail plus clair, plus sympa et plus professionnel.”</p></article>
+        <article class="card"><span class="tag blue">3</span><h3>Plan d'action</h3><p>“Fais-moi un plan d'action simple en 5 étapes.”</p></article>
+      </div>
+    </section>
+
+    <section id="glossaire">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Glossaire</span>
+          <h2>Les mots utiles pour ne pas subir la conversation</h2>
+        </div>
+        <p class="lead">Version condensée du glossaire PDF : les termes à connaître pour comprendre les discussions IA sans se perdre.</p>
+      </div>
+      <div class="grid four">
+        <article class="term"><strong>IA générative</strong><p>IA capable de produire texte, image, code, audio, vidéo, idées ou plans.</p></article>
+        <article class="term"><strong>LLM</strong><p>Grand modèle de langage derrière ChatGPT, Claude, Gemini, Mistral ou Llama.</p></article>
+        <article class="term"><strong>Modèle multimodal</strong><p>Modèle qui traite texte, image, audio, vidéo, fichiers ou actions.</p></article>
+        <article class="term"><strong>Prompt</strong><p>Instruction donnée à une IA.</p></article>
+        <article class="term"><strong>Prompt engineering</strong><p>Art de formuler une demande claire pour obtenir un meilleur résultat.</p></article>
+        <article class="term"><strong>Alignement</strong><p>Rendre une IA compatible avec intentions, règles et attentes humaines.</p></article>
+        <article class="term"><strong>Hallucination</strong><p>Quand l'IA invente une information fausse mais la présente comme vraie.</p></article>
+        <article class="term"><strong>Grounding</strong><p>Ancrer la réponse dans des sources fiables ou des données fournies.</p></article>
+        <article class="term"><strong>RAG</strong><p>L'IA cherche dans une base documentaire avant de générer sa réponse.</p></article>
+        <article class="term"><strong>Contexte</strong><p>Informations disponibles dans la conversation ou les fichiers.</p></article>
+        <article class="term"><strong>Fenêtre de contexte</strong><p>Quantité maximale d'informations prises en compte en une fois.</p></article>
+        <article class="term"><strong>Mémoire</strong><p>Informations conservées entre plusieurs conversations.</p></article>
+        <article class="term"><strong>Société IA-native</strong><p>Entreprise conçue dès le départ autour de l'IA.</p></article>
+        <article class="term"><strong>AI-first</strong><p>Approche où l'IA est au cœur de la stratégie produit ou business.</p></article>
+        <article class="term"><strong>Copilot</strong><p>Assistant IA qui aide l'humain sans agir totalement seul.</p></article>
+        <article class="term"><strong>Agent IA</strong><p>IA capable de planifier, utiliser des outils et poursuivre un objectif.</p></article>
+        <article class="term"><strong>Agentic AI</strong><p>IA orientée action, capable d'étapes, d'outils et de corrections.</p></article>
+        <article class="term"><strong>Agentic workflow</strong><p>Workflow où plusieurs étapes sont pilotées par IA ou agents.</p></article>
+        <article class="term"><strong>Agentic OS</strong><p>Système personnel ou pro piloté par agents IA.</p></article>
+        <article class="term"><strong>Résilience IA</strong><p>Capacité à fonctionner malgré erreurs, données imparfaites ou pannes.</p></article>
+        <article class="term"><strong>Robustesse</strong><p>Bien fonctionner quand les données changent ou sont inattendues.</p></article>
+        <article class="term"><strong>AI safety</strong><p>Rendre les IA sûres, fiables, contrôlables et non dangereuses.</p></article>
+        <article class="term"><strong>AI governance</strong><p>Règles et responsabilités pour encadrer l'usage IA.</p></article>
+        <article class="term"><strong>Dataset</strong><p>Jeu de données utilisé pour entraîner, tester ou évaluer.</p></article>
+        <article class="term"><strong>Training data</strong><p>Données utilisées pour entraîner un modèle.</p></article>
+        <article class="term"><strong>Fine-tuning</strong><p>Réentraînement spécialisé sur des données particulières.</p></article>
+        <article class="term"><strong>Embeddings</strong><p>Représentation numérique du sens d'un texte, document ou image.</p></article>
+        <article class="term"><strong>Vector database</strong><p>Base spécialisée pour stocker et chercher des embeddings.</p></article>
+        <article class="term"><strong>Données synthétiques</strong><p>Données générées artificiellement pour entraîner ou tester.</p></article>
+        <article class="term"><strong>Benchmark</strong><p>Test standardisé pour comparer des modèles.</p></article>
+        <article class="term"><strong>Eval</strong><p>Évaluation d'un modèle sur une tâche précise.</p></article>
+        <article class="term"><strong>Red teaming</strong><p>Test agressif pour trouver les failles d'un système IA.</p></article>
+        <article class="term"><strong>Biais</strong><p>Tendance à produire des réponses déséquilibrées ou stéréotypées.</p></article>
+        <article class="term"><strong>Explicabilité</strong><p>Comprendre pourquoi une IA a donné une réponse.</p></article>
+        <article class="term"><strong>Open-weight</strong><p>Modèle dont les poids sont disponibles.</p></article>
+        <article class="term"><strong>SLM</strong><p>Petit modèle de langage, utile pour tâches ciblées ou locales.</p></article>
+        <article class="term"><strong>On-device AI</strong><p>IA qui fonctionne directement sur l'appareil de l'utilisateur.</p></article>
+        <article class="term"><strong>Edge AI</strong><p>IA exécutée près de la source des données.</p></article>
+        <article class="term"><strong>Moat IA</strong><p>Avantage défensif difficile à copier : données, distribution, expertise, marque.</p></article>
+        <article class="term"><strong>Human-in-the-loop</strong><p>L'IA propose ou exécute, l'humain vérifie ou valide.</p></article>
+        <article class="term"><strong>Orchestration</strong><p>Organisation de plusieurs outils, modèles ou agents.</p></article>
+        <article class="term"><strong>Tool use</strong><p>Capacité d'un modèle à utiliser navigateur, email, code, API, etc.</p></article>
+        <article class="term"><strong>Function calling</strong><p>Appel structuré d'une fonction ou API par un modèle.</p></article>
+        <article class="term"><strong>Inference</strong><p>Moment où le modèle produit une réponse.</p></article>
+        <article class="term"><strong>Token</strong><p>Morceau de texte utilisé par les modèles.</p></article>
+        <article class="term"><strong>Distillation</strong><p>Petit modèle entraîné à imiter un grand modèle.</p></article>
+        <article class="term"><strong>MoE</strong><p>Architecture où certains experts internes sont activés selon la demande.</p></article>
+        <article class="term"><strong>Model routing</strong><p>Choix automatique du bon modèle selon la tâche.</p></article>
+        <article class="term"><strong>Fallback model</strong><p>Modèle de secours si le principal échoue ou coûte trop cher.</p></article>
+      </div>
+    </section>
+
+    <section id="supports">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Supports visuels</span>
+          <h2>Les deux infographies complètes</h2>
+        </div>
+        <p class="lead">Elles restent accessibles telles quelles, avec les informations reprises dans la page en version texte.</p>
+      </div>
+      <div class="image-strip">
+        <figure>
+          <img src="IA%20a%20la%20cool1.png" alt="Infographie complète L'IA à la cool, page 1.">
+          <figcaption>Page 1 : histoire, repères 2025-2026, compétition mondiale et capacités de base.</figcaption>
+        </figure>
+        <figure>
+          <img src="IA%20a%20la%20cool2.png" alt="Infographie complète L'IA à la cool, page 2.">
+          <figcaption>Page 2 : usages locaux, outils simples, prompt, bons réflexes, enfants et mini-défis.</figcaption>
+        </figure>
+      </div>
+      <div class="download-band" style="margin-top: 22px;">
+        <div>
+          <strong>Glossaire PDF</strong>
+          <p>Le document complet reste disponible en téléchargement.</p>
+        </div>
+        <a class="button" href="glossaire_termes_ia_simple.pdf">Ouvrir le PDF</a>
       </div>
     </section>
   </main>
 
   <footer>
-    Source locale : OUTILS-IA-RECAP-L-IA-A-LA-COOL.md
+    Sources locales : infographies IA a la cool, OUTILS-IA-RECAP-L-IA-A-LA-COOL.md, glossaire PDF, newsletter NEWS/Les limites des LLMs.eml.
   </footer>
 </body>
 </html>
