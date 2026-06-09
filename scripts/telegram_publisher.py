@@ -53,6 +53,24 @@ SECTION_ALIASES = {
     "infographie": "supports",
 }
 
+UNDO_WORDS = (
+    "annule",
+    "annuler",
+    "retire",
+    "retirer",
+    "enleve",
+    "enlever",
+    "supprime",
+    "supprimer",
+    "delete",
+    "remove",
+    "undo",
+    "revert",
+    "comme c'etait",
+    "comme cetait",
+    "juste avant",
+)
+
 
 def load_env_file() -> None:
     if not ENV_FILE.exists():
@@ -233,6 +251,23 @@ def publish_changes(image_path: Path, instruction: str) -> str:
     return first_line
 
 
+def is_undo_request(text: str) -> bool:
+    normalized = normalize_text(text)
+    return any(word in normalized for word in UNDO_WORDS)
+
+
+def undo_last_telegram_publish() -> str:
+    subject = run_git("log", "-1", "--format=%s")
+    if not subject.startswith("Add Telegram photo:"):
+        raise RuntimeError(
+            "Le dernier commit n'est pas une photo Telegram. Je n'annule rien automatiquement."
+        )
+    commit_output = run_git("revert", "--no-edit", "HEAD")
+    run_git("push", "origin", "main")
+    first_line = commit_output.splitlines()[0] if commit_output else "revert created"
+    return first_line
+
+
 def is_allowed(chat_id: int) -> bool:
     allowed = os.environ.get("TELEGRAM_ALLOWED_CHAT_ID", "").strip()
     return not allowed or str(chat_id) == allowed
@@ -264,13 +299,26 @@ def handle_text(token: str, state: dict[str, Any], message: dict[str, Any]) -> N
         send_message(
             token,
             chat_id,
-            "Envoie une photo avec une legende comme: 'ajoute dans outils' ou 'remplace hero'.",
+            "Envoie une photo avec une legende comme: 'ajoute dans outils' ou 'remplace hero'. Pour enlever la derniere photo publiee: 'annule' ou 'retire la derniere photo'.",
         )
         return
     pending = state.setdefault("pending", {}).pop(str(chat_id), None)
     save_state(state)
     if not pending:
-        send_message(token, chat_id, "Envoie d'abord une photo, avec ou sans legende.")
+        if is_undo_request(text):
+            try:
+                send_message(token, chat_id, "J'annule la derniere photo Telegram et je republie...")
+                revert = undo_last_telegram_publish()
+                send_message(token, chat_id, f"C'est retire et publie sur GitHub. {revert}")
+            except Exception as exc:
+                send_message(token, chat_id, f"Impossible d'annuler: {exc}")
+                raise
+            return
+        send_message(
+            token,
+            chat_id,
+            "Envoie d'abord une photo, ou ecris 'annule' pour retirer la derniere photo Telegram.",
+        )
         return
     process_photo_instruction(token, chat_id, pending, text)
 

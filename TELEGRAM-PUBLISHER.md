@@ -49,7 +49,23 @@ Tu peux aussi envoyer la photo sans legende, puis envoyer la consigne juste apre
 
 Sections reconnues : `hero`, `news`, `idee`, `reperes`, `usages`, `outils`, `prompt`, `enfants`, `mini-defi`, `glossaire`, `supports`.
 
-## 5. Publication
+## 5. Retirer la derniere photo
+
+Si la derniere publication faite par le bot ne te plait pas, envoie simplement :
+
+```text
+annule
+```
+
+ou :
+
+```text
+retire la derniere photo
+```
+
+Le bot cree alors un commit de revert, supprime la photo ajoutee par le dernier commit Telegram, puis repousse sur GitHub.
+
+## 6. Publication
 
 A chaque photo traitee, le script fait automatiquement :
 
