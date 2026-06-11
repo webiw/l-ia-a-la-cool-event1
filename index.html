@@ -73,7 +73,7 @@
 
     .nav-inner {
       width: min(var(--max), calc(100% - 32px));
-      min-height: 60px;
+      min-height: 88px;
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -89,7 +89,7 @@
     }
 
     .brand-logo {
-      width: 172px;
+      width: 92px;
       height: auto;
       display: block;
     }
@@ -116,9 +116,10 @@
     }
 
     .hero {
+      --section-img: url("AIcool.webp");
       width: min(var(--max), calc(100% - 32px));
       margin: 0 auto;
-      padding: 42px 0 22px;
+      padding: 44px 0 34px;
       display: grid;
       grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
       gap: 32px;
@@ -132,8 +133,8 @@
     .eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      min-height: 32px;
+      gap: 12px;
+      min-height: 58px;
       padding: 0;
       border: 0;
       border-radius: 0;
@@ -145,17 +146,15 @@
     }
 
     .eyebrow::before {
-      content: "✦";
+      content: "";
       display: grid;
       place-items: center;
-      width: 30px;
-      height: 30px;
+      width: 56px;
+      height: 56px;
       border: 1px solid var(--line);
-      border-radius: 10px;
-      background: var(--paper);
-      color: var(--orange);
-      box-shadow: 0 8px 18px rgba(58, 43, 24, 0.06);
-      font-size: 0.86rem;
+      border-radius: 16px;
+      background: var(--paper) var(--section-img, url("AIcool.webp")) center / cover no-repeat;
+      box-shadow: 0 14px 32px rgba(58, 43, 24, 0.12);
       line-height: 1;
     }
 
@@ -237,27 +236,87 @@
     }
 
     main {
+      position: relative;
+      isolation: isolate;
       width: min(var(--max), calc(100% - 32px));
       margin: 0 auto;
-      padding: 16px 0 84px;
+      padding: 0 0 84px;
     }
 
     section {
-      padding: 56px 0;
-      border-top: 1px solid var(--line);
+      --section-bg: var(--canvas);
+      --section-img: url("AIcool.webp");
+      position: relative;
+      z-index: 0;
+      padding: 82px 0;
+      border-top: 0;
+    }
+
+    section::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 100vw;
+      transform: translateX(-50%);
+      border-top: 1px solid rgba(211, 198, 181, 0.74);
+      background: var(--section-bg);
+    }
+
+    section > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    section:nth-of-type(4n + 1) {
+      --section-bg: #fffdf8;
+      --section-img: url("section-event.webp");
+    }
+
+    section:nth-of-type(4n + 2) {
+      --section-bg: #fff7e8;
+      --section-img: url("AIcool.webp");
+    }
+
+    section:nth-of-type(4n + 3) {
+      --section-bg: #f1faf8;
+      --section-img: url("section-human.webp");
+    }
+
+    section:nth-of-type(4n) {
+      --section-bg: #f7f5ef;
+      --section-img: url("section-tools.webp");
+    }
+
+    #news {
+      --section-bg: #fffaf0;
+      --section-img: url("section-event.webp");
+    }
+
+    #reperes {
+      --section-img: url("section-guide.webp");
+    }
+
+    #supports {
+      --section-img: url("section-tools.webp");
     }
 
     .section-head {
       display: grid;
-      grid-template-columns: minmax(0, 0.82fr) minmax(260px, 0.48fr);
-      gap: 32px;
-      align-items: end;
-      margin-bottom: 26px;
+      grid-template-columns: minmax(0, 0.92fr) minmax(280px, 0.42fr);
+      gap: 48px;
+      align-items: center;
+      margin-bottom: 38px;
     }
 
     h2 {
-      font-size: clamp(2rem, 4vw, 3.6rem);
-      font-weight: 860;
+      max-width: 980px;
+      margin-top: 12px;
+      font-size: clamp(2.55rem, 5.6vw, 5.35rem);
+      font-weight: 900;
+      line-height: 0.98;
     }
 
     h3 {
@@ -268,7 +327,8 @@
     .lead {
       margin: 0;
       color: var(--muted);
-      font-size: 1.05rem;
+      font-size: clamp(1.05rem, 1.7vw, 1.22rem);
+      line-height: 1.55;
     }
 
     .news-panel {
@@ -718,6 +778,11 @@
       .tool-row {
         min-width: 900px;
       }
+
+      .section-head {
+        gap: 18px;
+        align-items: start;
+      }
     }
 
     @media (max-width: 700px) {
@@ -733,6 +798,29 @@
 
       .hero {
         padding-top: 24px;
+      }
+
+      .brand-logo {
+        width: 78px;
+      }
+
+      .eyebrow {
+        min-height: 46px;
+        gap: 10px;
+      }
+
+      .eyebrow::before {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+      }
+
+      h2 {
+        font-size: clamp(2.25rem, 14vw, 3.35rem);
+      }
+
+      section {
+        padding: 64px 0;
       }
 
       .timeline,
@@ -762,7 +850,7 @@
   <nav class="site-nav" aria-label="Navigation principale">
     <div class="nav-inner">
       <a class="brand" href="#top" aria-label="Retour en haut">
-        <img class="brand-logo" src="aicool-logo.svg" alt="AI cool">
+        <img class="brand-logo" src="AIcool.webp" alt="AI cool">
       </a>
       <div class="nav-links">
         <a href="#news">News</a>
