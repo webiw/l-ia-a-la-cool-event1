@@ -133,15 +133,30 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      min-height: 30px;
-      padding: 0 10px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: var(--paper);
+      min-height: 32px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
       color: var(--teal);
       font-size: 0.78rem;
       font-weight: 850;
       text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "✦";
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--paper);
+      color: var(--orange);
+      box-shadow: 0 8px 18px rgba(58, 43, 24, 0.06);
+      font-size: 0.86rem;
+      line-height: 1;
     }
 
     h1,
@@ -408,38 +423,73 @@
       font-weight: 850;
     }
 
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      width: fit-content;
-      min-height: 28px;
-      padding: 0 9px;
-      margin-bottom: 12px;
-      border-radius: 999px;
+    .card-icon {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      margin-bottom: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
       background: var(--surface);
       color: var(--ink-soft);
-      font-size: 0.78rem;
-      font-weight: 820;
+      box-shadow: 0 10px 24px rgba(58, 43, 24, 0.06);
     }
 
-    .tag.orange {
+    .card-icon svg {
+      width: 25px;
+      height: 25px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .card-icon.orange {
       background: var(--rose-soft);
       color: var(--orange-deep);
     }
 
-    .tag.blue {
+    .card-icon.blue {
       background: var(--blue-soft);
       color: var(--blue);
     }
 
-    .tag.green {
+    .card-icon.green {
       background: var(--green-soft);
       color: var(--green);
     }
 
-    .tag.yellow {
+    .card-icon.yellow {
       background: var(--yellow-soft);
       color: #7a5400;
+    }
+
+    .source-link,
+    .source-list a {
+      display: inline-flex;
+      width: fit-content;
+      margin-top: 10px;
+      color: var(--teal);
+      font-size: 0.78rem;
+      font-weight: 850;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .source-link:hover,
+    .source-list a:hover {
+      color: var(--orange-deep);
+      text-decoration: underline;
+      text-underline-offset: 0.18em;
+    }
+
+    .source-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      margin-top: 12px;
     }
 
     .stat {
@@ -697,6 +747,18 @@
   </style>
 </head>
 <body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="icon-spark" viewBox="0 0 24 24"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8L12 2z"/><path d="M19 15l.8 2.7L22 18.5l-2.2.8L19 22l-.8-2.7-2.2-.8 2.2-.8L19 15z"/></symbol>
+    <symbol id="icon-chip" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/><path d="M10 10h4v4h-4z"/></symbol>
+    <symbol id="icon-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 16l9 5 9-5"/></symbol>
+    <symbol id="icon-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3 8.5-7 10-4-1.5-7-5-7-10V6l7-3z"/><path d="M9 12l2 2 4-5"/></symbol>
+    <symbol id="icon-graph" viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M7 16l3-4 3 2 5-7"/></symbol>
+    <symbol id="icon-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.2 2.5 3.2 5.5 3.2 9S14.2 18.5 12 21"/><path d="M12 3c-2.2 2.5-3.2 5.5-3.2 9s1 6.5 3.2 9"/></symbol>
+    <symbol id="icon-tools" viewBox="0 0 24 24"><path d="M14 7l3-3 3 3-3 3"/><path d="M4 20l8.5-8.5"/><path d="M7 4l4 4"/><path d="M5 6l13 13"/></symbol>
+    <symbol id="icon-doc" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></symbol>
+    <symbol id="icon-image" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M5 17l5-5 4 4 2-2 3 3"/></symbol>
+    <symbol id="icon-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c1-3.2 3-5 6-5s5 1.8 6 5"/><path d="M16 11c1.8.2 3.2 1.5 4 4"/></symbol>
+  </svg>
   <nav class="site-nav" aria-label="Navigation principale">
     <div class="nav-inner">
       <a class="brand" href="#top" aria-label="Retour en haut">
@@ -747,29 +809,37 @@
         </div>
         <div class="grid three" style="margin-top: 24px;">
           <article class="card">
-            <span class="tag green">Adoption</span>
+            <span class="card-icon green" aria-label="Adoption"><svg><use href="#icon-people"></use></svg></span>
             <h3>ChatGPT franchit 1 milliard d'utilisateurs</h3>
             <p>En trois ans, l'IA conversationnelle est passée de curiosité à réflexe quotidien pour une partie massive du grand public.</p>
+            <a class="source-link" href="https://m.economictimes.com/tech/artificial-intelligence/openai-anthropic-battle-for-wall-street-dominance-as-losses-mount/articleshow/131593241.cms" target="_blank" rel="noopener">Source</a>
           </article>
           <article class="card">
-            <span class="tag orange">Infrastructure</span>
+            <span class="card-icon orange" aria-label="Infrastructure"><svg><use href="#icon-chip"></use></svg></span>
             <h3>La guerre du calcul change d'échelle</h3>
             <p>Google, Anthropic et les grands acteurs de l'IA dépensent des sommes gigantesques pour obtenir toujours plus de puissance de calcul.</p>
+            <a class="source-link" href="https://www.businessinsider.com/google-spacex-deal-920-million-month-compute-capacity-gemini-enterprise-2026-6" target="_blank" rel="noopener">Source</a>
           </article>
           <article class="card">
-            <span class="tag blue">Commoditisation</span>
+            <span class="card-icon blue" aria-label="Commoditisation"><svg><use href="#icon-layers"></use></svg></span>
             <h3>Les modèles se banalisent vite</h3>
             <p>Microsoft lance ses propres modèles internes ; MiniMax saute une génération. Les labs vont presque plus vite qu'ils ne publient.</p>
+            <div class="source-list">
+              <a href="https://www.businessinsider.com/microsoft-ai-models-azure-mai-transcribe-voice-image-foundry-openai-2026-4" target="_blank" rel="noopener">Microsoft</a>
+              <a href="https://www.minimax.io/" target="_blank" rel="noopener">MiniMax</a>
+            </div>
           </article>
         </div>
         <div class="grid two" style="margin-top: 16px;">
           <article class="card">
             <h3>La critique de Yann LeCun</h3>
             <p>Un LLM manipule très bien le langage, mais il n'a pas vraiment de modèle du monde. Pour la robotique, les agents et la prédiction des conséquences, ce plafond devient important.</p>
+            <a class="source-link" href="https://www.ft.com/content/23fab126-f1d3-4add-a457-207a25730ad9" target="_blank" rel="noopener">Source</a>
           </article>
           <article class="card">
             <h3>La piste JEPA</h3>
             <p>Au lieu de prédire mot par mot ou pixel par pixel, JEPA apprend des représentations internes : ignorer le bruit, comprendre l'essentiel, planifier à plusieurs niveaux d'abstraction.</p>
+            <a class="source-link" href="https://arxiv.org/abs/2511.08544" target="_blank" rel="noopener">Source</a>
           </article>
         </div>
       </div>
@@ -785,29 +855,34 @@
       </div>
       <div class="grid three">
         <article class="card">
-          <span class="tag green">Fable 5</span>
+          <span class="card-icon green" aria-label="Fable 5"><svg><use href="#icon-spark"></use></svg></span>
           <h3>Le modèle très puissant pour usage général</h3>
           <p>Anthropic présente Fable 5 comme son modèle généralement disponible le plus capable, avec de gros progrès sur le code, le travail documentaire, la vision, la recherche scientifique et les tâches longues.</p>
+          <a class="source-link" href="https://www.anthropic.com/news/claude-fable-5-mythos-5" target="_blank" rel="noopener">Source</a>
         </article>
         <article class="card">
-          <span class="tag orange">Mythos 5</span>
+          <span class="card-icon orange" aria-label="Mythos 5"><svg><use href="#icon-shield"></use></svg></span>
           <h3>La version réservée aux accès de confiance</h3>
           <p>Mythos 5 repose sur le même modèle sous-jacent, mais avec certains garde-fous levés pour des cyberdéfenseurs, infrastructures critiques et programmes de recherche encadrés.</p>
+          <a class="source-link" href="https://www.anthropic.com/news/claude-fable-5-mythos-5" target="_blank" rel="noopener">Source</a>
         </article>
         <article class="card">
-          <span class="tag blue">Pourquoi ça compte</span>
+          <span class="card-icon blue" aria-label="Autonomie"><svg><use href="#icon-tools"></use></svg></span>
           <h3>L'IA devient plus autonome</h3>
           <p>Le signal important n'est pas seulement “un meilleur chatbot” : ce sont des modèles capables de tenir plus longtemps sur des tâches complexes, avec mémoire, vision et usage d'outils.</p>
+          <a class="source-link" href="https://www.anthropic.com/news/claude-fable-5-mythos-5" target="_blank" rel="noopener">Source</a>
         </article>
       </div>
       <div class="grid two" style="margin-top: 16px;">
         <article class="card">
           <h3>Garde-fous et fallback</h3>
           <p>Sur certains sujets sensibles comme cybersécurité, biologie, chimie ou distillation, Fable 5 peut basculer vers Claude Opus 4.8. Anthropic indique que ces garde-fous sont volontairement prudents et déclencheraient en moyenne dans moins de 5% des sessions.</p>
+          <a class="source-link" href="https://www.anthropic.com/news/claude-fable-5-mythos-5" target="_blank" rel="noopener">Source</a>
         </article>
         <article class="card">
           <h3>Prix et disponibilité</h3>
           <p>Prix annoncé : 10 $ / million de tokens en entrée et 50 $ / million de tokens en sortie. Fable 5 est disponible via API ; sur Pro, Max, Team et Enterprise par siège, Anthropic annonce une inclusion temporaire jusqu'au 22 juin 2026, puis un passage aux crédits d'usage à partir du 23 juin si la fenêtre n'est pas prolongée.</p>
+          <a class="source-link" href="https://www.anthropic.com/news/claude-fable-5-mythos-5" target="_blank" rel="noopener">Source</a>
         </article>
       </div>
       <div class="prompt-box" style="margin-top: 18px;">
@@ -827,17 +902,17 @@
       </div>
       <div class="grid three">
         <article class="card">
-          <span class="tag yellow">Comprendre</span>
+          <span class="card-icon yellow" aria-label="Comprendre"><svg><use href="#icon-doc"></use></svg></span>
           <h3>Moins de jargon</h3>
           <p>Commencer par les mots simples : prompt, modèle, hallucination, contexte, agent, RAG.</p>
         </article>
         <article class="card">
-          <span class="tag green">Tester</span>
+          <span class="card-icon green" aria-label="Tester"><svg><use href="#icon-tools"></use></svg></span>
           <h3>Une tâche réelle</h3>
           <p>Choisir une tâche pénible, répétitive ou bloquante que l'on pourrait déléguer à une IA dès demain.</p>
         </article>
         <article class="card">
-          <span class="tag orange">Discuter</span>
+          <span class="card-icon orange" aria-label="Discuter"><svg><use href="#icon-people"></use></svg></span>
           <h3>Pas de panique</h3>
           <p>Voir l'IA comme un outil quotidien : gagner du temps, apprendre plus vite, créer, communiquer et tester de nouvelles idées.</p>
         </article>
@@ -854,47 +929,56 @@
       </div>
       <div class="grid three">
         <article class="card">
-          <span class="tag green">Pas d'effondrement immédiat</span>
+          <span class="card-icon green" aria-label="Pas d'effondrement immédiat"><svg><use href="#icon-shield"></use></svg></span>
           <h3>Altman nuance le scénario catastrophe</h3>
           <p>Selon 01net, Sam Altman estime que l'apocalypse annoncée des cols blancs débutants ne s'est pas matérialisée pour l'instant. Il parle plutôt de restructurations sectorielles et reconnaît qu'une “part humaine” reste importante dans certains métiers.</p>
+          <a class="source-link" href="https://www.01net.com/actualites/sam-altman-change-davis-lia-ne-devrait-pas-provoquer-dapocalypse-sur-le-marche-du-travail-pour-linstant.html" target="_blank" rel="noopener">Source</a>
         </article>
         <article class="card">
-          <span class="tag orange">Attention aux excuses</span>
+          <span class="card-icon orange" aria-label="Attention aux excuses"><svg><use href="#icon-layers"></use></svg></span>
           <h3>L'IA peut servir de prétexte</h3>
           <p>Altman dénonce aussi le “blanchiment d'IA” : certaines entreprises invoqueraient l'IA pour justifier des plans sociaux dont les causes réelles seraient aussi financières, stratégiques ou liées à des erreurs de gestion.</p>
+          <a class="source-link" href="https://www.lefigaro.fr/secteur/high-tech/pour-sam-altman-l-ia-serait-l-excuse-bien-commode-de-nombreuses-entreprises-pour-justifier-leurs-plans-sociaux-20260222" target="_blank" rel="noopener">Source</a>
         </article>
         <article class="card">
-          <span class="tag blue">Seuil Coface</span>
+          <span class="card-icon blue" aria-label="Seuil Coface"><svg><use href="#icon-graph"></use></svg></span>
           <h3>À partir de 30% de tâches automatisables, ça devient sérieux</h3>
           <p>L'étude Coface citée par CIO-Online rappelle que l'indicateur mesure l'exposition des tâches, pas une destruction automatique des postes. Mais au-delà de 30% de tâches automatisables, un métier entre dans une zone de transformation significative.</p>
+          <a class="source-link" href="https://www.cio-online.com/actualites/lire-des-30-de-taches-automatisables-par-l-ia-l-emploi-est-menace-16971.html" target="_blank" rel="noopener">Source</a>
         </article>
       </div>
       <div class="grid four" style="margin-top: 16px;">
         <article class="stat">
           <strong>16%</strong>
           <span>des tâches seraient automatisables en France, au niveau global.</span>
+          <a class="source-link" href="https://www.cio-online.com/actualites/lire-des-30-de-taches-automatisables-par-l-ia-l-emploi-est-menace-16971.html" target="_blank" rel="noopener">Source</a>
         </article>
         <article class="stat">
           <strong>13%</strong>
           <span>des métiers, soit 120 sur 923, dépasseraient 30% de tâches automatisables.</span>
+          <a class="source-link" href="https://www.cio-online.com/actualites/lire-des-30-de-taches-automatisables-par-l-ia-l-emploi-est-menace-16971.html" target="_blank" rel="noopener">Source</a>
         </article>
         <article class="stat">
           <strong>5M</strong>
           <span>d'emplois en France seraient potentiellement concernés, sans être forcément supprimés.</span>
+          <a class="source-link" href="https://www.cio-online.com/actualites/lire-des-30-de-taches-automatisables-par-l-ia-l-emploi-est-menace-16971.html" target="_blank" rel="noopener">Source</a>
         </article>
         <article class="stat">
           <strong>79%</strong>
-          <span>des entreprises utiliseraient déjà l'IA générative selon le résumé de l'étude.</span>
+          <span>des entreprises utiliseraient déjà l'IA générative selon l'article CIO-Online.</span>
+          <a class="source-link" href="https://www.cio-online.com/actualites/lire-des-30-de-taches-automatisables-par-l-ia-l-emploi-est-menace-16971.html" target="_blank" rel="noopener">Source</a>
         </article>
       </div>
       <div class="grid two" style="margin-top: 16px;">
         <article class="card">
           <h3>Les plus exposés</h3>
           <p>Les métiers qualifiés sont particulièrement touchés : ingénierie autour de 29% de tâches automatisables ; droit, finance et créatif autour de 27% ; fonctions managériales et administratives autour de 24%. Les 10% de travailleurs les mieux rémunérés concentreraient 20 à 25% de tâches exposées.</p>
+          <a class="source-link" href="https://www.cio-online.com/actualites/lire-des-30-de-taches-automatisables-par-l-ia-l-emploi-est-menace-16971.html" target="_blank" rel="noopener">Source</a>
         </article>
         <article class="card">
           <h3>Les moins exposés</h3>
           <p>Les métiers physiques ou fortement relationnels restent moins touchés : hébergement-restauration, services à la personne, construction, santé, transports. L'enjeu n'est donc pas “tous remplacés”, mais “quelles tâches changent, et qui apprend à utiliser les outils”.</p>
+          <a class="source-link" href="https://www.cio-online.com/actualites/lire-des-30-de-taches-automatisables-par-l-ia-l-emploi-est-menace-16971.html" target="_blank" rel="noopener">Source</a>
         </article>
       </div>
       <div class="prompt-box" style="margin-top: 18px;">
@@ -919,22 +1003,27 @@
         <article class="moment">
           <time>1950</time>
           Alan Turing pose la question : une machine peut-elle penser ?
+          <a class="source-link" href="https://academic.oup.com/mind/article/LIX/236/433/986238" target="_blank" rel="noopener">Source</a>
         </article>
         <article class="moment">
           <time>1997</time>
           Deep Blue bat Garry Kasparov aux échecs.
+          <a class="source-link" href="https://www.ibm.com/history/deep-blue" target="_blank" rel="noopener">Source</a>
         </article>
         <article class="moment">
           <time>2012</time>
           Le deep learning explose grâce aux données et aux cartes graphiques.
+          <a class="source-link" href="https://papers.nips.cc/paper_files/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html" target="_blank" rel="noopener">Source</a>
         </article>
         <article class="moment">
           <time>2022</time>
           ChatGPT rend l'IA grand public.
+          <a class="source-link" href="https://openai.com/index/chatgpt/" target="_blank" rel="noopener">Source</a>
         </article>
         <article class="moment">
           <time>2024-2026</time>
           L'IA devient multimodale : texte, image, voix, vidéo, code et agents.
+          <a class="source-link" href="https://hai.stanford.edu/ai-index/2025-ai-index-report" target="_blank" rel="noopener">Source</a>
         </article>
       </div>
     </section>
@@ -951,39 +1040,50 @@
         <article class="stat">
           <strong>122 Md$</strong>
           <span>levés par OpenAI, pour une valorisation indiquée à 852 Md$.</span>
+          <a class="source-link" href="https://www.theguardian.com/technology/2026/mar/31/openai-raises-122-billion-ai-boom" target="_blank" rel="noopener">Source</a>
         </article>
         <article class="stat">
           <strong>965 Md$</strong>
           <span>valorisation post-money rapportée pour Anthropic en mai 2026, devant OpenAI.</span>
+          <a class="source-link" href="https://www.marketwatch.com/story/anthropic-nears-1-trillion-valuation-leapfrogging-openai-ac2dc81f" target="_blank" rel="noopener">Source</a>
         </article>
         <article class="stat">
           <strong>1,7 Md€</strong>
           <span>levés par Mistral AI, avec une valorisation indiquée à 11,7 Md€.</span>
+          <a class="source-link" href="https://www.lemonde.fr/economie/article/2025/09/09/ia-la-start-up-francaise-mistral-ai-valorisee-11-7-milliards-d-euros-apres-avoir-leve-1-7-milliard_6640102_3234.html" target="_blank" rel="noopener">Source</a>
         </article>
         <article class="stat">
           <strong>285,9 Md$</strong>
           <span>d'investissements privés IA aux États-Unis en 2025.</span>
+          <a class="source-link" href="https://hai.stanford.edu/ai-index/2025-ai-index-report" target="_blank" rel="noopener">Source</a>
         </article>
         <article class="stat">
           <strong>200 Md€</strong>
           <span>annoncés dans le plan européen “AI Continent” pour accélérer l'IA en Europe.</span>
+          <a class="source-link" href="https://digital-strategy.ec.europa.eu/en/news/eu-launches-investai-initiative-mobilise-eu200-billion-investment-artificial-intelligence" target="_blank" rel="noopener">Source</a>
         </article>
       </div>
       <div class="grid three" style="margin-top: 16px;">
         <article class="card">
-          <span class="tag blue">États-Unis</span>
+          <span class="card-icon blue" aria-label="États-Unis"><svg><use href="#icon-globe"></use></svg></span>
           <h3>Plateformes et infrastructure</h3>
           <p>Domination des investissements privés, des grandes plateformes et de l'infrastructure.</p>
+          <a class="source-link" href="https://hai.stanford.edu/ai-index/2025-ai-index-report" target="_blank" rel="noopener">Source</a>
         </article>
         <article class="card">
-          <span class="tag orange">Chine</span>
+          <span class="card-icon orange" aria-label="Chine"><svg><use href="#icon-graph"></use></svg></span>
           <h3>Progression rapide</h3>
           <p>Modèles très compétitifs et forte puissance industrielle.</p>
+          <a class="source-link" href="https://hai.stanford.edu/ai-index/2025-ai-index-report" target="_blank" rel="noopener">Source</a>
         </article>
         <article class="card">
-          <span class="tag green">Europe / France</span>
+          <span class="card-icon green" aria-label="Europe / France"><svg><use href="#icon-shield"></use></svg></span>
           <h3>Recherche et souveraineté</h3>
           <p>Recherche solide, volonté de souveraineté et Mistral en vitrine, mais bataille encore difficile.</p>
+          <div class="source-list">
+            <a href="https://www.lemonde.fr/economie/article/2025/09/09/ia-la-start-up-francaise-mistral-ai-valorisee-11-7-milliards-d-euros-apres-avoir-leve-1-7-milliard_6640102_3234.html" target="_blank" rel="noopener">Mistral</a>
+            <a href="https://digital-strategy.ec.europa.eu/en/news/eu-launches-investai-initiative-mobilise-eu200-billion-investment-artificial-intelligence" target="_blank" rel="noopener">Europe</a>
+          </div>
         </article>
       </div>
       <div class="prompt-box" style="margin-top: 16px;">
@@ -1004,12 +1104,12 @@
         <p class="lead">Le plus important n'est pas de tout connaître. C'est d'oser essayer sur une situation réelle.</p>
       </div>
       <div class="grid three">
-        <article class="card"><span class="tag green">Artisan · BTP · jardin · piscine</span><h3>Gagner du temps terrain</h3><p>Devis, réponses clients, avant/après, check-lists chantier.</p></article>
-        <article class="card"><span class="tag orange">Commerçant · resto · cave · food truck</span><h3>Communiquer plus vite</h3><p>Menus, avis Google, promos, posts Instagram, traduction.</p></article>
-        <article class="card"><span class="tag blue">Association · bénévole</span><h3>Organiser sans s'épuiser</h3><p>Affiches, mails, comptes rendus, organisation d'événements.</p></article>
-        <article class="card"><span class="tag yellow">Parent · élève · étudiant</span><h3>Apprendre autrement</h3><p>Explications simples, quiz, révisions, histoires, langues.</p></article>
-        <article class="card"><span class="tag green">Indépendant · cadre · consultant</span><h3>Clarifier son travail</h3><p>Mails, synthèses, offres, brainstorming, comptes rendus.</p></article>
-        <article class="card"><span class="tag orange">Recherche d'emploi · administratif</span><h3>Passer à l'action</h3><p>CV, lettres, préparation d'entretien, formulaires.</p></article>
+        <article class="card"><span class="card-icon green" aria-label="Artisanat"><svg><use href="#icon-tools"></use></svg></span><h3>Gagner du temps terrain</h3><p>Artisans, BTP, jardin, piscine : devis, réponses clients, avant/après, check-lists chantier.</p></article>
+        <article class="card"><span class="card-icon orange" aria-label="Commerce"><svg><use href="#icon-spark"></use></svg></span><h3>Communiquer plus vite</h3><p>Commerces, restos, caves, food trucks : menus, avis Google, promos, posts Instagram, traduction.</p></article>
+        <article class="card"><span class="card-icon blue" aria-label="Association"><svg><use href="#icon-people"></use></svg></span><h3>Organiser sans s'épuiser</h3><p>Associations et bénévoles : affiches, mails, comptes rendus, organisation d'événements.</p></article>
+        <article class="card"><span class="card-icon yellow" aria-label="Apprendre"><svg><use href="#icon-doc"></use></svg></span><h3>Apprendre autrement</h3><p>Parents, élèves, étudiants : explications simples, quiz, révisions, histoires, langues.</p></article>
+        <article class="card"><span class="card-icon green" aria-label="Travail"><svg><use href="#icon-layers"></use></svg></span><h3>Clarifier son travail</h3><p>Indépendants, cadres, consultants : mails, synthèses, offres, brainstorming, comptes rendus.</p></article>
+        <article class="card"><span class="card-icon orange" aria-label="Action"><svg><use href="#icon-graph"></use></svg></span><h3>Passer à l'action</h3><p>Recherche d'emploi et administratif : CV, lettres, préparation d'entretien, formulaires.</p></article>
       </div>
     </section>
 
@@ -1041,19 +1141,22 @@
       </div>
       <div class="grid three">
         <article class="card">
-          <span class="tag green">Débutant</span>
+          <span class="card-icon green" aria-label="Débutant"><svg><use href="#icon-spark"></use></svg></span>
           <h3>ChatGPT</h3>
           <p>Discuter, rédiger, reformuler, réfléchir. Le meilleur point d'entrée sans setup technique.</p>
+          <a class="source-link" href="https://chatgpt.com/" target="_blank" rel="noopener">Ouvrir</a>
         </article>
         <article class="card">
-          <span class="tag yellow">Documents</span>
+          <span class="card-icon yellow" aria-label="Documents"><svg><use href="#icon-doc"></use></svg></span>
           <h3>NotebookLM</h3>
           <p>Travailler à partir de ses propres sources : résumer, créer une FAQ, une synthèse ou une mind map.</p>
+          <a class="source-link" href="https://notebooklm.google/" target="_blank" rel="noopener">Ouvrir</a>
         </article>
         <article class="card">
-          <span class="tag orange">Créatif</span>
+          <span class="card-icon orange" aria-label="Créatif"><svg><use href="#icon-image"></use></svg></span>
           <h3>Génération d'images</h3>
           <p>Créer une affiche, un visuel, une idée de logo ou une illustration.</p>
+          <a class="source-link" href="https://chatgpt.com/" target="_blank" rel="noopener">Ouvrir</a>
         </article>
       </div>
       <div class="table-wrap" style="margin-top: 22px;">
@@ -1186,9 +1289,9 @@
         <p class="lead">Pas besoin d'une formation de 40 heures : une bonne première expérience suffit souvent à débloquer l'envie d'explorer.</p>
       </div>
       <div class="grid three">
-        <article class="card"><span class="tag green">1</span><h3>Explique-moi</h3><p>“Explique-moi ce sujet comme à un enfant de 10 ans.”</p></article>
-        <article class="card"><span class="tag orange">2</span><h3>Clarifie ce mail</h3><p>“Rends ce mail plus clair, plus sympa et plus professionnel.”</p></article>
-        <article class="card"><span class="tag blue">3</span><h3>Plan d'action</h3><p>“Fais-moi un plan d'action simple en 5 étapes.”</p></article>
+        <article class="card"><span class="card-icon green" aria-label="Test 1"><svg><use href="#icon-doc"></use></svg></span><h3>Explique-moi</h3><p>“Explique-moi ce sujet comme à un enfant de 10 ans.”</p></article>
+        <article class="card"><span class="card-icon orange" aria-label="Test 2"><svg><use href="#icon-spark"></use></svg></span><h3>Clarifie ce mail</h3><p>“Rends ce mail plus clair, plus sympa et plus professionnel.”</p></article>
+        <article class="card"><span class="card-icon blue" aria-label="Test 3"><svg><use href="#icon-graph"></use></svg></span><h3>Plan d'action</h3><p>“Fais-moi un plan d'action simple en 5 étapes.”</p></article>
       </div>
     </section>
 
